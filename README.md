@@ -1,5 +1,5 @@
 # blynk-sketch-generator
-This repository is for generating [Blynk]((http://www.blynk.cc)) sketches.
+This repository is for generating [Blynk](http://www.blynk.cc) sketches.
 
 # Installation
 
