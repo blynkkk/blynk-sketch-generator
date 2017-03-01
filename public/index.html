@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#23c890">
+  <link rel="icon" sizes="144x144" type="image/png" href="favicon.png">
+
+  <meta property="og:image" content="http://blynk-examples.herokuapp.com/preview.png" />
+  <meta property="og:image:secure_url" content="https://blynk-examples.herokuapp.com/preview.png" />
+  <meta property="og:image:width" content="600" />
+  <meta property="og:image:height" content="269" />
+
+  <title>Blynk Example Browser</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu%20Mono' rel='stylesheet'>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.min.js"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+  <script src="blynk-arduino.js"></script>
+
+  <style>
+  *, *:before, *:after {
+    box-sizing: border-box;
+  }
+
+  html, body, select, button {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+
+    font-size: 16px;
+    color: #000;
+    background-color: #FFF;
+  }
+
+  select, button {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .left {
+    width: 20%;
+    top:0;
+    bottom:0;
+    left:0;
+    position: fixed;
+    padding: 30px;
+    color: #FFF;
+    background-color: #23C890;
+  }
+
+  .right {
+    top:0;
+    bottom:0;
+    right:0;
+    position: fixed;
+    padding: 30px;
+  }
+
+  .bottom-right {
+    font-size: 12px;
+
+    width: 164px;
+    bottom:0;
+    right:0;
+    position: fixed;
+    padding: 30px;
+  }
+
+  .note, .note > * {
+    font-size: 12px;
+  }
+
+  .hljs {
+    font-family: "Ubuntu Mono", "Lucida Console", Monaco, monospace;
+    font-size: 14px;
+    box-shadow: 5px 5px 20px #BBB;
+    background-color: #FAFAFA;
+
+    width: 60%;
+    left:  25%;
+    top:   0px;
+    height: auto;
+    margin: 30px;
+    padding: 20px;
+    position: absolute;
+  }
+
+  a:link, a:visited, a:active {
+    color: #23C890;
+  }
+
+  a:hover {
+    color: blue;
+  }
+
+  </style>
+</head>
+<body>
+  <div class="left">
+    <img alt="Blynk" src="logo.png" height=64 />
+    <div>
+      <label>Board:</label><br/>
+      <select name="board" id="board-list"></select>
+    </div>
+    <div>
+      <label>Connection:</label><br/>
+      <select name="shield" id="shield-list"></select>
+    </div>
+    <div class="note">
+      * more board options will be available
+    </div>
+    <br/>
+    <div>
+      <label>Example:</label><br/>
+      <select name="example" id="example-list"></select>
+    </div>
+  </div>
+  <div class="right">
+    <div class="note">Please give us <br/> a Github star!<br/></div>
+    <a class="github-button" href="https://github.com/blynkkk/blynk-library" data-icon="octicon-star" data-style="mega" data-count-href="/blynkkk/blynk-library" data-count-api="/repos/blynkkk/blynk-library#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star blynkkk/blynk-library on GitHub">Star</a>
+    <br/>
+    <br/>
+    <button class="btn" data-clipboard-target=".sketch">&#128203; copy<br/>example</button>
+  </div>
+  <div class="bottom-right note">
+    <b>WARNING!</b><br/>
+    Some sketches may contain errors. Please check your code carefully and
+    <button id="reportproblem">&#9888; report a problem</button>
+  </div>
+  <pre><code class="hljs sketch">...</code></pre>
+
+  <script type="text/javascript">
+
+$(function() {
+
+  var prev_shield;
+
+  function fillOptions(options, data) {
+    options.empty();
+    $.each( data, function(i, v) {
+      if (v.startsWith("---")) {
+        v = v.replace(/-/g, '');
+        options.append($("<option disabled />").val(v).html("──" + v).css("font-weight", "bold"));
+      } else {
+        options.append($("<option />").val(v).html("&nbsp;&nbsp;&nbsp;" + v));
+      }
+    });
+  }
+
+  function updateBoards() {
+    $.getJSON( "/listBoards", function(data) {
+      //data.sort();
+      fillOptions($("#board-list"), data);
+      $("#board-list").val($('#board-list option:eq(1)').val());
+      updateConn();
+    });
+  }
+
+  function updateConn() {
+    var board = $( "#board-list option:selected" ).val();
+    $.getJSON( "/getBoardShields?b=" + board, function(data) {
+      fillOptions($("#shield-list"), data);
+      if (prev_shield !== undefined && data.indexOf(prev_shield) >= 0) {
+        $('#shield-list').val(prev_shield);
+      }
+      reGenerate();
+    });
+  };
+
+  function reGenerate() {
+    var board = $("#board-list option:selected" ).val();
+    var shield = $("#shield-list option:selected" ).val();
+    var example = $("#example-list option:selected" ).val();
+
+    $.ajax({
+      url : "/generate?b=" + board + "&s=" + shield + "&e=" + example,
+      dataType: "text",
+      success : function (data) {
+        data = hljs.highlight("blynk-arduino", data).value;
+        $(".sketch").html(data);
+        $('pre code').each(function(){
+            // Get the content
+            var str = $(this).html();
+            // Set the regex string
+            var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.-]*(\?\S+)?)?)?)/ig
+            // Replace plain text links by hyperlinks
+            var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
+            // Echo link
+            $(this).html(replaced_text);
+        });
+      }
+    });
+  };
+
+  var clipboard = new Clipboard('.btn');
+
+  clipboard.on('success', function(e) {
+    e.clearSelection();
+  });
+
+  clipboard.on('error', function(e) {
+    alert('Cannot copy');
+  });
+
+  $("#board-list").change(function() {
+    updateConn();
+  });
+
+  $("#shield-list").change(function() {
+    prev_shield = $("#shield-list option:selected" ).val();
+    reGenerate();
+  });
+
+  $("#example-list").change(function() {
+    reGenerate();
+  });
+
+  $("#reportproblem").click(function() {
+    var url = "http://community.blynk.cc/t/enjoy-new-blynk-example-browser/10705";
+    window.open(url, "_blank");
+  });
+
+  updateBoards();
+
+  $.getJSON( "/listExamples", function(data) {
+    fillOptions($("#example-list"), data);
+    reGenerate();
+  });
+});
+
+  </script>
+</body>
+</html>
