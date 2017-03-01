@@ -11,7 +11,7 @@ function add_names(d) {
 }
 
 function run_inherit(d) {
-  var result = {}
+  var result = {};
   _.keys(d).forEach((k) => {
     var i = d[k];
     var chain = [i];
@@ -19,7 +19,7 @@ function run_inherit(d) {
       var tgt = i.inherit;
       if (typeof tgt === 'string') {
         if (_.has(d,tgt))
-          tgt = d[tgt]
+          tgt = d[tgt];
         else
           console.error(tgt, "not found");
       }
@@ -65,7 +65,7 @@ function generate(board, shield, example) {
       inc:  "\b",
       glob: "\b",
       init: "\b",
-      loop: "\b",
+      loop: "\b"
     },
     example: {
       comment: "\b",
@@ -73,7 +73,7 @@ function generate(board, shield, example) {
       inc:  "\b",
       glob: "\b",
       init: "\b",
-      loop: "\b",
+      loop: "\b"
     }
   };
   _.extend(data, boards[board]);
@@ -96,7 +96,7 @@ function getBoardShields(board) {
   board = boards[board];
   var result = [];
   if (_.has(board, "builtin")) {
-    result.push("--- Builtin");
+    result.push("--- Built In");
     Array.prototype.push.apply(result, board.builtin);
   }
 
@@ -112,7 +112,7 @@ function getBoardShields(board) {
     });
   }
   all_shields = all_shields.filter((k) => (shields[k].embedded !== true));
-  Array.prototype.push.apply(result, all_shields)
+  Array.prototype.push.apply(result, all_shields);
 
   return result;
 }
