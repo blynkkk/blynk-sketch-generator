@@ -298,7 +298,7 @@ SoftwareSerial SerialBLE(10, 11); // RX, TX
   Blynk.begin(SerialBLE, auth);
 
   Serial.println("Waiting for connections...");
-    `,
+    `
   },
   /***********************************************/
   "HC05/HC06" : {
@@ -315,7 +315,7 @@ SoftwareSerial SerialBLE(10, 11); // RX, TX
 
   NOTE: Bluetooth support is in beta!
     `,
-    inherit: "HM10/HC08",
+    inherit: "HM10/HC08"
   },
   "Adafruit Bluefruit LE" : { inherit: "nRF8001" },
 
@@ -372,21 +372,21 @@ TinyGsm modem(SerialAT);
   //modem.simUnlock("1234");
 
   Blynk.begin(auth, modem, apn, user, pass);
-    `,
+    `
   },
   /***********************************************/
   "SimCOM SIM900" : {
     defs: `
 #define TINY_GSM_MODEM_SIM900
     `,
-    inherit: "SimCOM SIM800",
+    inherit: "SimCOM SIM800"
   },
   /***********************************************/
   "Neoway M590"   : {
     defs: `
 #define TINY_GSM_MODEM_M590
     `,
-    inherit: "SimCOM SIM800",
+    inherit: "SimCOM SIM800"
   },
   /***********************************************************/
   "--- Serial" : {},
@@ -435,7 +435,7 @@ SoftwareSerial SwSerial(10, 11); // RX, TX
    ***********************************************************/
   "System default" : {
     // Empty
-    embedded: true,
+    embedded: true
   },
   "ESP8266 WiFi" : {
     embedded: true,
@@ -557,7 +557,7 @@ char pass[] = "YourPassword";
   Particle.keepAlive(PARTICLE_KEEPALIVE);
   Blynk.begin(auth, BLYNK_IP);
     `
-  },
+  }
   /***********************************************/
   //"Arduino 101 BLE" : { //TODO
     

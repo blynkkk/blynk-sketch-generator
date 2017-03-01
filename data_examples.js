@@ -1787,7 +1787,7 @@ void checkPhysicalButton()
     loop: `
   timer.run();
     `
-  },
+  }
 
 };
 

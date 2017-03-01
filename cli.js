@@ -11,14 +11,14 @@ var mkdirSync = function (path) {
   } catch(e) {
     if ( e.code != 'EEXIST' ) throw e;
   }
-}
+};
 
 var mkdirpSync = function (dirpath) {
   var parts = dirpath.split(path.sep);
   for( var i = 1; i <= parts.length; i++ ) {
     mkdirSync( path.join.apply(null, parts.slice(0, i)) );
   }
-}
+};
 
 const cmd = process.argv[2];
 if (cmd === "gen") {
@@ -135,7 +135,7 @@ if (cmd === "gen") {
     "Boards_USB_Serial/chipKIT_Uno32"            : ["", ""],
     "Boards_USB_Serial/Digistump_Digispark"      : ["", ""],
     "Boards_USB_Serial/Energia_Serial_USB"       : ["", ""],
-    "Boards_USB_Serial/Teensy3"                  : ["", ""],
+    "Boards_USB_Serial/Teensy3"                  : ["", ""]
   };
 /*
   Object.keys(boards_presets).forEach((k) => {

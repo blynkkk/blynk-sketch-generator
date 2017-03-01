@@ -117,13 +117,13 @@ int main(int argc, char* argv[])
 const ArduinoUSB = {
   serial_dbg: "SerialUSB",
   serial_dat: "Serial",
-  inherit: ArduinoRegular,
+  inherit: ArduinoRegular
 };
 
 const ArduinoSerial1 = {
   serial_dbg: "Serial",
   serial_dat: "Serial1",
-  inherit: ArduinoRegular,
+  inherit: ArduinoRegular
 };
 
 const boards = {
@@ -132,11 +132,11 @@ const boards = {
   /***********************************************/
   "ESP8266" : {
     builtin: ["ESP8266 WiFi", "ESP8266 WiFi (SSL)"],
-    exclude: [/.*/],
+    exclude: [/.*/]
   },
   "ESP32" : {
     builtin: ["ESP32 WiFi"], // TODO: "BLE"
-    exclude: [/.*/],
+    exclude: [/.*/]
   },
   "NodeMCU"                : { inherit: "ESP8266" },
   "WeMos D1"               : { inherit: "ESP8266" },
@@ -149,10 +149,10 @@ const boards = {
   "Raspberry Pi" : {
     exclude: [/.*/],
     builtin: ["System default"],
-    inherit: Raspberry,
+    inherit: Raspberry
   },
   "Ubuntu" : {
-    inherit: "Raspberry Pi",
+    inherit: "Raspberry Pi"
   },
   /***********************************************/
   "--- Arduino" : {},
@@ -163,17 +163,17 @@ const boards = {
   {
     inherit: "Arduino Zero",
     builtin: ["Arduino WiFi Shield 101"],
-    exclude: [/Serial/, /Ethernet/, /WiFly/, /CC3000/],
+    exclude: [/Serial/, /Ethernet/, /WiFly/, /CC3000/]
   },
   "Arduino MKRZero"          : { inherit: "Arduino MKR1000" },
 
   "Arduino Yun" : {
     builtin: ["Yun Bridge"],
-    exclude: [/.*/],
+    exclude: [/.*/]
   },
   "Arduino 101" : {
     builtin: ["Arduino 101 BLE"],
-    exclude: [/nRF/, /HC/, /Bluefruit/],
+    exclude: [/nRF/, /HC/, /Bluefruit/]
   },
   "Arduino Zero" : {
     inherit: ArduinoUSB
@@ -199,7 +199,7 @@ const boards = {
   "Arduino Mega ADK"         : { inherit: "Arduino Mega 2560" },
   "Arduino Micro"            : { inherit: "Arduino Leonardo"  },
   "Arduino Pro Micro"        : { inherit: "Arduino Leonardo",
-                                 exclude: [/Ethernet/, /WiFi/], },
+                                 exclude: [/Ethernet/, /WiFi/] },
 
   "Arduino Mini"             : { inherit: "Arduino Nano" },
   "Arduino Pro Mini"         : { inherit: "Arduino Nano" },
@@ -221,12 +221,12 @@ const boards = {
   },
   "Particle Photon" : {
     builtin: ["Particle WiFi"],
-    exclude: [/.*/],
+    exclude: [/.*/]
   },
   "Particle Electron" : {
     builtin: ["Particle Cellular"],
-    exclude: [/.*/],
-  },
+    exclude: [/.*/]
+  }
   //"Bluz" : {
   //  builtin: ["BLE"],
   //  exclude: [/.*/],
@@ -238,42 +238,42 @@ const later = {
   "--- Intel" : {},
   /***********************************************/
   "Intel Edison" : {
-    builtin: ["WiFi"],
+    builtin: ["WiFi"]
   },
   "Intel Galileo" : {
-    builtin: ["Ethernet"],
+    builtin: ["Ethernet"]
   },
   "Intel Curie" : {
-    inherit: "Arduino 101",
+    inherit: "Arduino 101"
   },
   "Intel Joule" : {
-    builtin: ["WiFi", "Ethernet"],
+    builtin: ["WiFi", "Ethernet"]
   },
   /***********************************************/
   "--- RedBear" : {},
   /***********************************************/
   "RedBear Duo" : {
-    builtin: ["WiFi", "BLE"],
+    builtin: ["WiFi", "BLE"]
   },
   "RedBear BLE Nano" : {
-    builtin: ["BLE"],
+    builtin: ["BLE"]
   },
   "RedBear Blend" : {
-    builtin: ["BLE"],
+    builtin: ["BLE"]
   },
   "RedBear Blend Micro"  : { inherit: "RedBear Blend" },
   /***********************************************/
   "--- Other" : {},
   /***********************************************/
   "BBC micro:bit" : {
-    builtin: ["BLE"],
+    builtin: ["BLE"]
   },
   "RFDuino BLE" : {
-    builtin: ["BLE"],
+    builtin: ["BLE"]
   },
   "Simblee BLE" : {
-    builtin: ["BLE"],
-  },
+    builtin: ["BLE"]
+  }
   /***********************************************/
   //"TinyDuino"                : { inherit: "Arduino Uno", exclude: [/.*/] },
   //"ATtiny85"                 : { exclude: [/.*/] },
