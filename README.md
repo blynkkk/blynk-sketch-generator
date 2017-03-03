@@ -7,21 +7,15 @@ This repository is for generating [Blynk](http://www.blynk.cc) sketches.
 
 ```
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
-sudo apt-get install -y nodejs
-sudo apt-get install -y build-essential
-sudo apt-get install realpath
+sudo apt-get install -y nodejs build-essential realpath
 ```
 
 ##Install used modules
 
 ```
-npm install forever -g
-npm install underscore
-npm install path
-npm install express
-npm install body-parser
-npm install serve-static
-npm install serve-favicon
+cd blynk-sketch-generator
+npm install
+npm install -g forever
 ```
 
 ##Forward to correct port
