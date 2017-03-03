@@ -11,7 +11,7 @@ var favicon = require('serve-favicon');
 var gen   = require("./index.js");
 
 var app = express();
-var port = process.env.PORT || 8080;
+var port = 8080;
 var publicPath = path.resolve('./public/');
 
 app.use(favicon(__dirname + '/public/favicon.png'));
