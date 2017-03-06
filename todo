@@ -2,9 +2,6 @@
 // Clean empty strings
 // Review all boards available shield options filter
 // Check build of platforms
-// Add SPA url handling
-
-// Add API + CORRS
 
 const ArduinoSwSerial = {
   serial_dbg: "Serial",
