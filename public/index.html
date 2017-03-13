@@ -28,7 +28,7 @@
     box-sizing: border-box;
   }
 
-  html, body, select, button {
+  html, body, select, button, input {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
@@ -43,7 +43,7 @@
     background-color: #FFF;
   }
 
-  select, button {
+  select, button, input {
     width: 100%;
     font-size: 14px;
   }
@@ -117,8 +117,9 @@
       <label>Connection:</label><br/>
       <select name="shield" id="shield-list"></select>
     </div>
-    <div class="note">
-      * more board options will be available
+    <div>
+      <label>Auth Token:</label><br/>
+      <input name="auth" id="auth-token" type="text" >
     </div>
     <br/>
     <div>
@@ -180,15 +181,17 @@ $(function() {
     var board = $("#board-list option:selected").val();
     var shield = $("#shield-list option:selected").val();
     var example = $("#example-list option:selected").val();
+    var auth = $("#auth-token").val();
 
-    window.history.pushState([board, shield, example], board,
+    window.history.pushState([board, shield, example, auth], board,
             "?board=" + encodeURIComponent(board) +
             "&shield=" + encodeURIComponent(shield) +
-            "&example=" + encodeURIComponent(example)
+            "&example=" + encodeURIComponent(example) +
+            (auth !== "" ? "&auth=" + encodeURIComponent(auth) : "")
     );
 
     $.ajax({
-      url : "/generate?b=" + board + "&s=" + shield + "&e=" + example,
+      url : "/generate?b=" + board + "&s=" + shield + "&e=" + example + (auth ? "&a=" + encodeURIComponent(auth) : ""),
       dataType: "text",
       success : function (data) {
         data = hljs.highlight("blynk-arduino", data).value;
@@ -245,16 +248,31 @@ $(function() {
     reGenerate();
   });
 
+  var authChangeTmr = -1;
+  var onAuthChange = function() {
+    if (authChangeTmr >= 0) {
+      clearTimeout(authChangeTmr);
+    }
+    authChangeTmr = setTimeout(function() {
+      reGenerate();
+      authChangeTmr = -1;
+    }, 1000);
+  };
+
+  $("#auth-token").change(onAuthChange);
+  $("#auth-token").keyup(onAuthChange);
+
   $("#reportproblem").click(function() {
     var url = "https://github.com/blynkkk/blynk-sketch-generator/issues";
     window.open(url, "_blank");
   });
 
-      function init(board, shield, example) {
+      function init(board, shield, example, auth) {
           var tmp;
           var boardParam = ((tmp = getUrlParameter("board")) ? tmp : board);
           var shieldParam = ((tmp = getUrlParameter("shield")) ? tmp : shield);
           var exampleParam = ((tmp = getUrlParameter("example")) ? tmp : example);
+          var authParam = ((tmp = getUrlParameter("auth")) ? tmp : auth);
 
           $.getJSON( "/listBoards", function(data) {
               fillOptions($("#board-list"), data);
@@ -266,6 +284,7 @@ $(function() {
                       $("#board-list").val(boardParam);
                       $("#shield-list").val(shieldParam);
                       $("#example-list").val(exampleParam);
+                      $("#auth-token").val(authParam);
 
                       reGenerate();
                   });
@@ -273,7 +292,7 @@ $(function() {
           });
       }
 
-    init("ESP8266", "ESP8266 WiFi", "GettingStarted/BlynkBlink");
+    init("ESP8266", "ESP8266 WiFi", "GettingStarted/BlynkBlink", "");
 });
 
   </script>

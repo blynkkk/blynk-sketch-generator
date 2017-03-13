@@ -52,12 +52,13 @@ add_names(shields);
 boards = run_inherit(boards);
 shields = run_inherit(shields);
 
-function generate(board, shield, example) {
+function generate(board, shield, example, auth_token) {
   if (boards[board] === undefined) return "No such board";
   if (shields[shield] === undefined) return "No such shield";
   if (examples[example] === undefined) return "No such example";
+  
   var data = {
-    auth: "YourAuthToken",
+    auth:    auth_token || "YourAuthToken",
     defines: "\b",
     board : {
       comment: "\b",
