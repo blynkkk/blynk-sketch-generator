@@ -8,8 +8,8 @@ const examples = {
     comment : `
   You’ll need:
    - Blynk App (download from AppStore or Google Play)
-   - Arduino UNO or similar microcontroller board
-   - Decide how to connect Arduino to the Internet
+   - <%= name %> board
+   - Decide how to connect to Blynk
      (USB, Ethernet, Wi-Fi, Bluetooth, ...)
 
   There is a bunch of great example sketches included to show you how to get
@@ -42,8 +42,8 @@ BLYNK_WRITE(V1)
   // You can also use:
   // String i = param.asStr();
   // double d = param.asDouble();
-  Serial.print("V1 Slider value is: ");
-  Serial.println(pinValue);
+  <%= serial_dbg %>.print("V1 Slider value is: ");
+  <%= serial_dbg %>.println(pinValue);
 }
     `,
   },
@@ -234,7 +234,7 @@ void emailOnButtonPress()
 
   if (isButtonPressed) // You can write any condition to trigger e-mail sending
   {
-    Serial.println("Button is pressed."); // This can be seen in the Serial Monitor
+    <%= serial_dbg %>.println("Button is pressed."); // This can be seen in the Serial Monitor
     Blynk.email("your_email@mail.com", "Subject: Button Logger", "You just pushed the button...");
 
     // Or, if you want to use the email specified in the App (like for App Export):
@@ -304,20 +304,20 @@ BLYNK_WRITE(V1) {
   GpsParam gps(param);
 
   // Print 6 decimal places for Lat, Lon
-  Serial.print("Lat: ");
-  Serial.println(gps.getLat(), 7);
+  <%= serial_dbg %>.print("Lat: ");
+  <%= serial_dbg %>.println(gps.getLat(), 7);
 
-  Serial.print("Lon: ");
-  Serial.println(gps.getLon(), 7);
+  <%= serial_dbg %>.print("Lon: ");
+  <%= serial_dbg %>.println(gps.getLon(), 7);
 
   // Print 2 decimal places for Alt, Speed
-  Serial.print("Altitute: ");
-  Serial.println(gps.getAltitude(), 2);
+  <%= serial_dbg %>.print("Altitute: ");
+  <%= serial_dbg %>.println(gps.getAltitude(), 2);
 
-  Serial.print("Speed: ");
-  Serial.println(gps.getSpeed(), 2);
+  <%= serial_dbg %>.print("Speed: ");
+  <%= serial_dbg %>.println(gps.getSpeed(), 2);
 
-  Serial.println();
+  <%= serial_dbg %>.println();
 }
 
     `,
@@ -337,10 +337,10 @@ BLYNK_WRITE(V1) {
   int y = param[1].asInt();
 
   // Do something with x and y
-  Serial.print("X = ");
-  Serial.print(x);
-  Serial.print("; Y = ");
-  Serial.println(y);
+  <%= serial_dbg %>.print("X = ");
+  <%= serial_dbg %>.print(x);
+  <%= serial_dbg %>.print("; Y = ");
+  <%= serial_dbg %>.println(y);
 }
     `,
   },
@@ -454,10 +454,10 @@ void blinkLedWidget()
 {
   if (led1.getValue()) {
     led1.off();
-    Serial.println("LED on V1: off");
+    <%= serial_dbg %>.println("LED on V1: off");
   } else {
     led1.on();
-    Serial.println("LED on V1: on");
+    <%= serial_dbg %>.println("LED on V1: on");
   }
 }
     `,
@@ -501,11 +501,11 @@ void blinkLedWidget()
 {
   if (ledStatus) {
     led1.setColor(BLYNK_RED);
-    Serial.println("LED on V1: red");
+    <%= serial_dbg %>.println("LED on V1: red");
     ledStatus = false;
   } else {
     led1.setColor(BLYNK_GREEN);
-    Serial.println("LED on V1: green");
+    <%= serial_dbg %>.println("LED on V1: green");
     ledStatus = true;
   }
 }
@@ -549,8 +549,8 @@ void fadeLedWidget()
   if (value > 255 || value < 0) {
     delta = -delta;
   } else {
-    Serial.print("LED on V2: ");
-    Serial.println(value);
+    <%= serial_dbg %>.print("LED on V2: ");
+    <%= serial_dbg %>.println(value);
     led2.setValue(value);
   }
 }
@@ -649,16 +649,16 @@ BLYNK_WRITE(V1) {
   switch (param.asInt())
   {
     case 1: // Item 1
-      Serial.println("Item 1 selected");
+      <%= serial_dbg %>.println("Item 1 selected");
       break;
     case 2: // Item 2
-      Serial.println("Item 2 selected");
+      <%= serial_dbg %>.println("Item 2 selected");
       break;
     case 3: // Item 3
-      Serial.println("Item 3 selected");
+      <%= serial_dbg %>.println("Item 3 selected");
       break;
     default:
-      Serial.println("Unknown item selected");
+      <%= serial_dbg %>.println("Unknown item selected");
   }
 }
     `,
@@ -690,8 +690,8 @@ BLYNK_WRITE(V5)
   }
 
   Blynk.setProperty(V5, "label", action);
-  Serial.print(action);
-  Serial.println();
+  <%= serial_dbg %>.print(action);
+  <%= serial_dbg %>.println();
 }
     `,
   },
@@ -712,7 +712,7 @@ void notifyOnButtonPress()
   // Invert state, since button is "Active LOW"
   int isButtonPressed = !digitalRead(2);
   if (isButtonPressed) {
-    Serial.println("Button is pressed.");
+    <%= serial_dbg %>.println("Button is pressed.");
 
     // Note:
     //   We allow 1 notification per 15 seconds for now.
@@ -804,11 +804,11 @@ void clockDisplay()
 
   String currentTime = String(hour()) + ":" + minute() + ":" + second();
   String currentDate = String(day()) + " " + month() + " " + year();
-  Serial.print("Current time: ");
-  Serial.print(currentTime);
-  Serial.print(" ");
-  Serial.print(currentDate);
-  Serial.println();
+  <%= serial_dbg %>.print("Current time: ");
+  <%= serial_dbg %>.print(currentTime);
+  <%= serial_dbg %>.print(" ");
+  <%= serial_dbg %>.print(currentDate);
+  <%= serial_dbg %>.println();
 
   // Send time to the App
   Blynk.virtualWrite(V1, currentTime);
@@ -852,9 +852,9 @@ void requestTime() {
 
 BLYNK_WRITE(InternalPinRTC) {
   long t = param.asLong();
-  Serial.print("Unix time: ");
-  Serial.print(t);
-  Serial.println();
+  <%= serial_dbg %>.print("Unix time: ");
+  <%= serial_dbg %>.print(t);
+  <%= serial_dbg %>.println();
 }
     `,
     init: `
@@ -936,17 +936,17 @@ BLYNK_WRITE(V11) {
     init: `
   // Setup table event callbacks
   table.onOrderChange([](int indexFrom, int indexTo) {
-    Serial.print("Reordering: ");
-    Serial.print(indexFrom);
-    Serial.print(" => ");
-    Serial.print(indexTo);
-    Serial.println();
+    <%= serial_dbg %>.print("Reordering: ");
+    <%= serial_dbg %>.print(indexFrom);
+    <%= serial_dbg %>.print(" => ");
+    <%= serial_dbg %>.print(indexTo);
+    <%= serial_dbg %>.println();
   });
 
   table.onSelectChange([](int index, bool selected) {
-    Serial.print("Item ");
-    Serial.print(index);
-    Serial.print(selected ? " marked" : " unmarked");
+    <%= serial_dbg %>.print("Item ");
+    <%= serial_dbg %>.print(index);
+    <%= serial_dbg %>.print(selected ? " marked" : " unmarked");
   });
     `,
   },
@@ -1002,8 +1002,8 @@ BLYNK_WRITE(V1)
     glob: `
 BLYNK_WRITE(V1) {
   int startTimeInSecs = param[0].asInt();
-  Serial.println(startTimeInSecs);
-  Serial.println();
+  <%= serial_dbg %>.println(startTimeInSecs);
+  <%= serial_dbg %>.println();
 }
     `,
   },
@@ -1021,18 +1021,18 @@ BLYNK_WRITE(V1) {
 
   if (t.hasStartTime())
   {
-    Serial.println(String("Start: ") +
+    <%= serial_dbg %>.println(String("Start: ") +
                    t.getStartHour() + ":" +
                    t.getStartMinute() + ":" +
                    t.getStartSecond());
   }
   else if (t.isStartSunrise())
   {
-    Serial.println("Start at sunrise");
+    <%= serial_dbg %>.println("Start at sunrise");
   }
   else if (t.isStartSunset())
   {
-    Serial.println("Start at sunset");
+    <%= serial_dbg %>.println("Start at sunset");
   }
   else
   {
@@ -1043,18 +1043,18 @@ BLYNK_WRITE(V1) {
 
   if (t.hasStopTime())
   {
-    Serial.println(String("Stop: ") +
+    <%= serial_dbg %>.println(String("Stop: ") +
                    t.getStopHour() + ":" +
                    t.getStopMinute() + ":" +
                    t.getStopSecond());
   }
   else if (t.isStopSunrise())
   {
-    Serial.println("Stop at sunrise");
+    <%= serial_dbg %>.println("Stop at sunrise");
   }
   else if (t.isStopSunset())
   {
-    Serial.println("Stop at sunset");
+    <%= serial_dbg %>.println("Stop at sunset");
   }
   else
   {
@@ -1064,20 +1064,20 @@ BLYNK_WRITE(V1) {
   // Process timezone
   // Timezone is already added to start/stop time
 
-  Serial.println(String("Time zone: ") + t.getTZ());
+  <%= serial_dbg %>.println(String("Time zone: ") + t.getTZ());
 
   // Get timezone offset (in seconds)
-  Serial.println(String("Time zone offset: ") + t.getTZ_Offset());
+  <%= serial_dbg %>.println(String("Time zone offset: ") + t.getTZ_Offset());
 
   // Process weekdays (1. Mon, 2. Tue, 3. Wed, ...)
 
   for (int i = 1; i <= 7; i++) {
     if (t.isWeekdaySelected(i)) {
-      Serial.println(String("Day ") + i + " is selected");
+      <%= serial_dbg %>.println(String("Day ") + i + " is selected");
     }
   }
 
-  Serial.println();
+  <%= serial_dbg %>.println();
 }
     `,
   },
@@ -1101,8 +1101,8 @@ BLYNK_WRITE(V5)
   // this method will be triggered every day
   // until you remove widget or stop project or
   // clean stop/start fields of widget
-  Serial.print("Got a value: ");
-  Serial.println(param.asStr());
+  <%= serial_dbg %>.print("Got a value: ");
+  <%= serial_dbg %>.println(param.asStr());
 }
     `,
   },
@@ -1126,7 +1126,7 @@ SimpleTimer timer;
 void tweetUptime()
 {
   long uptime = millis() / 60000L;
-  Serial.println("Tweeting every 10 minutes ;)");
+  <%= serial_dbg %>.println("Tweeting every 10 minutes ;)");
 
   // Actually send the message.
   // Note:
@@ -1140,7 +1140,7 @@ void tweetOnButtonPress()
   // Invert state, since button is "Active LOW"
   int isButtonPressed = !digitalRead(2);
   if (isButtonPressed) {
-    Serial.println("Button is pressed.");
+    <%= serial_dbg %>.println("Button is pressed.");
 
     Blynk.tweet("Yaaay... button is pressed! :)\\n #arduino #IoT #blynk @blynk_app");
   }
@@ -1177,8 +1177,8 @@ void tweetOnButtonPress()
     glob: `
 BLYNK_WRITE(V0)
 {
-  Serial.println("WebHook data:");
-  Serial.println(param.asStr());
+  <%= serial_dbg %>.println("WebHook data:");
+  <%= serial_dbg %>.println(param.asStr());
 }
     `,
     init: `
@@ -1234,7 +1234,7 @@ void sendSensor()
   float t = dht.readTemperature(); // or dht.readTemperature(true) for Fahrenheit
 
   if (isnan(h) || isnan(t)) {
-    Serial.println("Failed to read from DHT sensor!");
+    <%= serial_dbg %>.println("Failed to read from DHT sensor!");
     return;
   }
   // You can send any value at any time.
@@ -1354,13 +1354,13 @@ BLYNK_WRITE(V1)
 
 // This is called for all virtual pins, that don't have BLYNK_WRITE handler
 BLYNK_WRITE_DEFAULT() {
-  Serial.print("input V");
-  Serial.print(request.pin);
-  Serial.println(":");
+  <%= serial_dbg %>.print("input V");
+  <%= serial_dbg %>.print(request.pin);
+  <%= serial_dbg %>.println(":");
   // Print all parameter values
   for (auto i = param.begin(); i < param.end(); ++i) {
-    Serial.print("* ");
-    Serial.println(i.asString());
+    <%= serial_dbg %>.print("* ");
+    <%= serial_dbg %>.println(i.asString());
   }
 }
 
@@ -1368,10 +1368,10 @@ BLYNK_WRITE_DEFAULT() {
 BLYNK_READ_DEFAULT() {
   // Generate random response
   int val = random(0, 100);
-  Serial.print("output V");
-  Serial.print(request.pin);
-  Serial.print(": ");
-  Serial.println(val);
+  <%= serial_dbg %>.print("output V");
+  <%= serial_dbg %>.print(request.pin);
+  <%= serial_dbg %>.print(": ");
+  <%= serial_dbg %>.println(val);
   Blynk.virtualWrite(request.pin, val);
 }
 
@@ -1522,7 +1522,7 @@ BLYNK_WRITE(V1) {
 BLYNK_WRITE(V1) {
   int value = param.asInt();
   if (value == 1) {
-    Serial.println("Item 1 selected");
+    <%= serial_dbg %>.println("Item 1 selected");
   } else if (value == 2) {
     // If item 2 is selected, change menu items...
     BlynkParamAllocated items(128); // list length, in bytes
@@ -1535,7 +1535,7 @@ BLYNK_WRITE(V1) {
     //Blynk.setProperty(V1, "labels", "item 1", "item 2", "item 3");
 
   } else {
-    Serial.println("Unknown item selected");
+    <%= serial_dbg %>.println("Unknown item selected");
   }
 }
     `,

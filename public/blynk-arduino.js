@@ -14,7 +14,7 @@ hljs.registerLanguage("blynk-arduino",function(e){var t=e.getLanguage("cpp").exp
 
 " SimpleTimer Adafruit_NeoPixel DHT" +
 " WiFly BLESerial SwSerial TinyGsm ESP8266" +
-" SerialUSB SerialBLE SerialDebug"
+" Serial1 SerialUSB SerialBLE SerialDebug"
 
 ,literal:"DIGITAL_MESSAGE FIRMATA_STRING ANALOG_MESSAGE REPORT_DIGITAL REPORT_ANALOG INPUT_PULLUP SET_PIN_MODE INTERNAL2V56 SYSTEM_RESET LED_BUILTIN INTERNAL1V1 SYSEX_START INTERNAL EXTERNAL DEFAULT OUTPUT INPUT HIGH LOW"+
 

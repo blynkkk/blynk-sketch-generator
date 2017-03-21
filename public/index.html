@@ -162,7 +162,7 @@ $(function() {
     var currentCroup;
     $.each( data, function(i, v) {
 
-      if(v.indexOf('/') !== -1) {
+      if (v.indexOf('/') !== -1) {
 
         var parsed = v.split('/').map(function (i) {
           return i.replace('_', ' ').replace(/(([a-z])([A-Z]))/g, '$2 $3').trim()

@@ -45,9 +45,9 @@ var boards   = require("./data_boards.js");
 var shields  = require("./data_shields.js");
 var examples = require("./data_examples.js");
 
-add_names(examples);
 add_names(boards);
 add_names(shields);
+add_names(examples);
 
 boards = run_inherit(boards);
 shields = run_inherit(shields);
@@ -80,11 +80,36 @@ function generate(board, shield, example, auth_token) {
   _.extend(data, boards[board]);
   _.extend(data.board, shields[shield]);
   _.extend(data.example, examples[example]);
+  
+  if (("need_serial" in data.board) && !("serial_dat" in data)) {
+    data.serial_dat = "SwSerial";
+
+    data.board.inc = `
+#include <SoftwareSerial.h>
+SoftwareSerial SwSerial(10, 11); // RX, TX
+    ` + data.board.inc;
+
+  }
+  
+  if ("swap_serial" in data.board) {
+    var tmp = data.serial_dbg;
+    data.serial_dbg = data.serial_dat;
+    data.serial_dat = tmp;
+  }
+
   data = trim_obj(data);
   //return JSON.stringify(data);
+  
+  var code = data.template;
+  
+  for (var i = 0; i < 5; i++) {
+    var t = _.template(code);
+    code = t(data);
+    if (code.indexOf("<%") == -1) {
+      break;
+    }
+  }
 
-  var t = _.template(data.template);
-  var code = t(data);
   code = code.replace(/\r\n/g, "\n");
   code = code.replace(/\n[\s]*[\b]\n/g, "\n");
   code = code.replace(/[\b]/g,"");

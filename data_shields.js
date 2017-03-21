@@ -281,7 +281,8 @@ BLESerial SerialBLE(BLE_REQ, BLE_RDY, BLE_RST);
     `
   },
   /***********************************************/
-  "HM10/HC08" : {
+  "HM10 or HC08" : {
+    need_serial: true,
     comment: `
   This example shows how to use Serial BLE modules (HM-10, HC-08)
   to connect your project to Blynk.
@@ -301,7 +302,7 @@ SoftwareSerial SerialBLE(10, 11); // RX, TX
     `
   },
   /***********************************************/
-  "HC05/HC06" : {
+  "HC05 or HC06" : {
     comment: `
   This example shows how to use Arduino with HC-06/HC-05
   Bluetooth 2.0 Serial Port Profile (SPP) module
@@ -315,7 +316,7 @@ SoftwareSerial SerialBLE(10, 11); // RX, TX
 
   NOTE: Bluetooth support is in beta!
     `,
-    inherit: "HM10/HC08"
+    inherit: "HM10 or HC08"
   },
   "Adafruit Bluefruit LE" : { inherit: "nRF8001" },
 
@@ -391,8 +392,10 @@ TinyGsm modem(SerialAT);
   /***********************************************************/
   "--- Serial" : {},
   /***********************************************************/
-  "Serial/USB" : {
-    name: "Hardware Serial / USB",
+  "Serial or USB" : {
+    need_serial: true,
+    swap_serial: true,
+    name: "Hardware Serial or USB",
     comment : `
   =>
   =>          USB HOWTO: http://tiny.cc/BlynkUSB
@@ -402,10 +405,28 @@ TinyGsm modem(SerialAT);
 #include <BlynkSimpleStream.h>
     `,
     init: `
-  // Blynk will work through Serial
+  // Blynk will work through <%= serial_dat %>
   // Do not read or write this serial manually in your sketch
-  Serial.begin(9600);
-  Blynk.begin(Serial, auth);
+  <%= serial_dat %>.begin(9600);
+  Blynk.begin(<%= serial_dat %>, auth);
+    `
+  },
+  /***********************************************/
+  "Serial1" : {
+    name: "Hardware Serial1",
+    comment : `
+  =>
+  =>          USB HOWTO: http://tiny.cc/BlynkUSB
+  =>
+    `,
+    inc: `
+#include <BlynkSimpleStream.h>
+    `,
+    init: `
+  // Blynk will work through Serial1
+  // Do not read or write this serial manually in your sketch
+  Serial1.begin(9600);
+  Blynk.begin(Serial1, auth);
     `
   },
   /***********************************************/

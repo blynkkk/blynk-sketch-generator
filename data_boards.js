@@ -22,9 +22,7 @@ const header_comment =
  *************************************************************/
 `;
 
-const ArduinoRegular = {
-  serial_dbg: "Serial",
-  template: header_comment + `
+const ArduinoRegularTemplate = header_comment + `
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT <%= serial_dbg %>
 
@@ -59,8 +57,7 @@ void loop()
   <%= example.loop %>
 }
 
-`
-};
+`;
 
 const Raspberry = {
   serial_dbg: "stdout",
@@ -114,16 +111,22 @@ int main(int argc, char* argv[])
 `
 };
 
+const ArduinoRegular = {
+  template: ArduinoRegularTemplate,
+  serial_dbg: "Serial",
+  exclude: [/Serial1/]
+};
+
 const ArduinoUSB = {
+  template: ArduinoRegularTemplate,
   serial_dbg: "SerialUSB",
   serial_dat: "Serial",
-  inherit: ArduinoRegular
 };
 
 const ArduinoSerial1 = {
+  template: ArduinoRegularTemplate,
   serial_dbg: "Serial",
-  serial_dat: "Serial1",
-  inherit: ArduinoRegular
+  serial_dat: "Serial1"
 };
 
 const boards = {
