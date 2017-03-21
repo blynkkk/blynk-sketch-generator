@@ -581,7 +581,7 @@ void fadeLedWidget()
     `,
     glob: `
 // Select your pin with physical button
-const int btnPin = 7;
+const int btnPin = 1;
 
 WidgetLED led3(V3);
 
