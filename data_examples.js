@@ -1,6 +1,10 @@
 'use strict';
 
 const examples = {
+  /*
+  "Simple" : {
+  },
+  */
   /***********************************************************
    * GettingStarted
    ***********************************************************/
@@ -108,9 +112,7 @@ BLYNK_READ(PIN_UPTIME)
   // This command writes Arduino's uptime in seconds to Virtual Pin (5)
   Blynk.virtualWrite(PIN_UPTIME, millis() / 1000);
 }
-    `,
-    init: `
-    `,
+    `
   },
   /***********************************************/
   "GettingStarted/Servo" : {
@@ -423,8 +425,6 @@ WidgetLCD lcd(V1);
   lcd.print(4, 1, "World");
   // Please use timed events when LCD printintg in void loop to avoid sending too many commands
   // It will cause a FLOOD Error, and connection will be dropped
-    `,
-    loop: `
     `
   },
   /***********************************************/
@@ -1001,7 +1001,7 @@ BLYNK_WRITE(V1)
     `,
     glob: `
 BLYNK_WRITE(V1) {
-  int startTimeInSecs = param[0].asInt();
+  long startTimeInSecs = param[0].asLong();
   <%= serial_dbg %>.println(startTimeInSecs);
   <%= serial_dbg %>.println();
 }
@@ -1682,8 +1682,8 @@ void checkPin()
   even if hardware resets or looses connection temporarily
 
   Project setup in the Blynk app:
-    Slider widget (0...100) on V0
-    Slider widget (0...100) on V2
+    Slider widget (0...1024) on V0
+    Value display (0...1024) on V2
     Button widget on digital pin (connected to an LED)
     `,
     glob: `
@@ -1698,7 +1698,7 @@ BLYNK_CONNECTED() {
     Blynk.syncAll();
 
     // You can also update individual virtual pins like this:
-    //Blynk.syncVirtual(V0, V1, V4);
+    //Blynk.syncVirtual(V0, V2);
 
     isFirstConnect = false;
   }
@@ -1710,8 +1710,15 @@ BLYNK_CONNECTED() {
 
 BLYNK_WRITE(V0)
 {
-  int value = param.asInt();
-  Blynk.virtualWrite(V2, value);
+  // Use of syncAll() will cause this function to be called
+  // Parameter holds last slider value
+  int sliderValue0 = param.asInt();
+}
+
+BLYNK_WRITE(V2)
+{
+  // You'll get uptime value here as result of syncAll()
+  int uptime = param.asInt();
 }
     `,
   },
