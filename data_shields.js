@@ -65,7 +65,7 @@ const shields = {
   "ENC28J60" : {
     comment : `
   For this example you need UIPEthernet library:
-    https://github.com/ntruchsess/arduino_uip
+    https://github.com/UIPEthernet/UIPEthernet
 
   Typical wiring would be:
    VCC -- 5V
@@ -236,6 +236,9 @@ WiFly wifly;
   /***********************************************************/
   "nRF8001"   : {
     comment: `
+  For this example you need BLEPeripheral library
+    from http://librarymanager/all#BLEPeripheral
+    or https://github.com/sandeepmistry/arduino-BLEPeripheral
 
   Warning: Bluetooth support is in beta!
     `,
@@ -272,9 +275,6 @@ BLESerial SerialBLE(BLE_REQ, BLE_RDY, BLE_RST);
   "HM10 or HC08" : {
     need_serial: true,
     comment: `
-  This example shows how to use Serial BLE modules (HM-10, HC-08)
-  to connect your project to Blynk.
-
   Warning: Bluetooth support is in beta!
     `,
     inc: `
@@ -294,11 +294,8 @@ SoftwareSerial SerialBLE(10, 11); // RX, TX
   /***********************************************/
   "HC05 or HC06" : {
     comment: `
-  This example shows how to use Arduino with HC-06/HC-05
-  Bluetooth 2.0 Serial Port Profile (SPP) module
-  to connect your project to Blynk.
-
-  Note: This only works on Android! iOS does not support SPP :(
+  Note: This only works on Android!
+        iOS does not support Bluetooth 2.0 Serial Port Profile
         You may need to pair the module with your smartphone
         via Bluetooth settings. Default pairing password is 1234
 
@@ -315,8 +312,6 @@ SoftwareSerial SerialBLE(10, 11); // RX, TX
   /***********************************************************/
   "SimCOM SIM800" : {
     comment: `
-  This example shows how to use GSM modem
-  to connect your project to Blynk.
 
   Attention! Please check out TinyGSM guide:
     http://tiny.cc/tiny-gsm-readme
@@ -351,12 +346,15 @@ char pass[] = "";
 TinyGsm modem(SerialAT);
     `,
     init: `
+  delay(10);
+
   // Set GSM module baud rate
   SerialAT.begin(115200);
   delay(3000);
 
   // Restart takes quite some time
   // To skip it, call init() instead of restart()
+  Serial.println("Initializing modem...");
   modem.restart();
 
   // Unlock your SIM card with a PIN
@@ -586,9 +584,6 @@ char pass[] = "YourPassword";
   "Arduino 101 BLE" : {
     embedded: true,
     comment: `
-  This example shows how to use Arduino 101 CurieBLE
-  to connect your project to Blynk.
-
   Note: This requires CurieBLE library
     from http://librarymanager/all#CurieBLE
 
