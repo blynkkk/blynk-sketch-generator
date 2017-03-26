@@ -204,6 +204,7 @@ int wifi_sec = WLAN_SEC_WPA2;
     `,
     glob : `
 // Your WiFi credentials.
+// Set password to "" for open networks.
 char ssid[] = "YourNetworkName";
 char pass[] = "YourPassword";
 
