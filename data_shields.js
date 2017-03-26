@@ -4,20 +4,6 @@ const shields = {
   /***********************************************************/
   "--- Ethernet" : {},
   /***********************************************************/
-/*
-  "Simple Ethernet" : {
-    name: "Arduino Ethernet Shield",
-    inc: `
-#include <SPI.h>
-#include <Ethernet.h>
-#include <BlynkSimpleEthernet.h>
-    `,
-    init: `
-  Blynk.begin(auth);
-    `
-  },
-*/
-  /***********************************************/
   "Ethernet Shield W5100" : {
     name: "Arduino Ethernet Shield",
     inc: `
@@ -250,6 +236,8 @@ WiFly wifly;
   /***********************************************************/
   "nRF8001"   : {
     comment: `
+
+  Warning: Bluetooth support is in beta!
     `,
     inc: `
 #include <BlynkSimpleSerialBLE.h>
@@ -286,6 +274,8 @@ BLESerial SerialBLE(BLE_REQ, BLE_RDY, BLE_RST);
     comment: `
   This example shows how to use Serial BLE modules (HM-10, HC-08)
   to connect your project to Blynk.
+
+  Warning: Bluetooth support is in beta!
     `,
     inc: `
 #include <BlynkSimpleSerialBLE.h>
@@ -454,6 +444,19 @@ SoftwareSerial SwSerial(10, 11); // RX, TX
   /***********************************************************
    * EMBEDDED
    ***********************************************************/
+  "Default" : {
+    embedded: true,
+    name: "Arduino Ethernet Shield",
+    inc: `
+#include <SPI.h>
+#include <Ethernet.h>
+#include <BlynkSimpleEthernet.h>
+    `,
+    init: `
+  Blynk.begin(auth);
+    `
+  },
+  /***********************************************/
   "System default" : {
     // Empty
     embedded: true
@@ -578,11 +581,43 @@ char pass[] = "YourPassword";
   Particle.keepAlive(PARTICLE_KEEPALIVE);
   Blynk.begin(auth, BLYNK_IP);
     `
-  }
+  },
   /***********************************************/
-  //"Arduino 101 BLE" : { //TODO
-    
-  //}
+  "Arduino 101 BLE" : {
+    embedded: true,
+    comment: `
+  This example shows how to use Arduino 101 CurieBLE
+  to connect your project to Blynk.
+
+  Note: This requires CurieBLE library
+    from http://librarymanager/all#CurieBLE
+
+  Warning: Bluetooth support is in beta!
+    `,
+    inc: `
+#include <BlynkSimpleCurieBLE.h>
+#include <CurieBLE.h>
+    `,
+    glob : `
+BLEPeripheral  blePeripheral;
+    `,
+    init: `
+  delay(1000);
+
+  blePeripheral.setLocalName("Blynk");
+  blePeripheral.setDeviceName("Blynk");
+  blePeripheral.setAppearance(384);
+
+  Blynk.begin(blePeripheral, auth);
+
+  blePeripheral.begin();
+
+  Serial.println("Waiting for connections...");
+    `,
+    loop: `
+  blePeripheral.poll();
+    `
+  }
 };
 
 module.exports = shields;
