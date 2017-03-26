@@ -62,8 +62,8 @@ if (cmd === "gen") {
   console.log();
   console.log("combinations:", comb);
 } else if (cmd === "autogen") {
-  var board = process.argv[3];
-  var shield = process.argv[4];
+  var board = "Arduino Uno";
+  var shield = "Default";
 
   gen.listExamples().forEach((k) => {
     var ino = k.split(path.sep).slice(-1)[0] + ".ino";
@@ -75,69 +75,70 @@ if (cmd === "gen") {
   });
 
   const boards_presets = {
-    "Boards_WiFi/Adafruit_Feather_M0_WiFi"       : ["", ""],
-    "Boards_WiFi/Arduino_MKR1000"                : ["", ""],
-    "Boards_WiFi/Arduino_WiFi_Shield"            : ["", ""],
-    "Boards_WiFi/Arduino_WiFi_Shield_101"        : ["", ""],
-    "Boards_WiFi/Arduino_Yun"                    : ["", ""],
-    "Boards_WiFi/CC3000"                         : ["", ""],
-    "Boards_WiFi/Digistump_Oak"                  : ["", ""],
-    "Boards_WiFi/Energia_WiFi"                   : ["", ""],
-    "Boards_WiFi/ESP32_WiFi"                     : ["", ""],
-    "Boards_WiFi/ESP8266_Shield"                 : ["", ""],
-    "Boards_WiFi/ESP8266_Standalone"             : ["", ""],
-    "Boards_WiFi/ESP8266_Standalone_SSL"         : ["", ""],
-    "Boards_WiFi/Fishino"                        : ["", ""],
-    "Boards_WiFi/Intel_Edison_WiFi"              : ["", ""],
-    "Boards_WiFi/LinkItONE"                      : ["", ""],
-    "Boards_WiFi/RedBear_Duo_WiFi"               : ["", ""],
-    "Boards_WiFi/RN_XV_WiFly"                    : ["", ""],
-    "Boards_WiFi/Sparkfun_Blynk_Board"           : ["", ""],
-    "Boards_WiFi/TheAirBoard_WiFly"              : ["", ""],
-    "Boards_WiFi/TinyDuino_WiFi"                 : ["", ""],
-    "Boards_WiFi/WildFire_V3"                    : ["", ""],
-    "Boards_WiFi/WildFire_V4"                    : ["", ""],
+    //"Boards_WiFi/Adafruit_Feather_M0_WiFi"       : ["", ""],
+    "Boards_WiFi/Arduino_MKR1000"                : ["Arduino MKR1000", "Arduino WiFi Shield 101"],
+    "Boards_WiFi/Arduino_WiFi_Shield"            : ["Arduino Uno", "Arduino WiFi Shield"],
+    "Boards_WiFi/Arduino_WiFi_Shield_101"        : ["Arduino Uno", "Arduino WiFi Shield 101"],
+    "Boards_WiFi/Arduino_Yun"                    : ["Arduino Yun", "Yun Bridge"],
+    "Boards_WiFi/CC3000"                         : ["Arduino Uno", "CC3000"],
+    //"Boards_WiFi/Digistump_Oak"                  : ["", ""],
+    "Boards_WiFi/Energia_WiFi"                   : ["Arduino Uno", "Arduino WiFi Shield"],
+    "Boards_WiFi/ESP32_WiFi"                     : ["ESP32", "ESP32 WiFi"],
+    "Boards_WiFi/ESP8266_Shield"                 : ["ESP8266", "ESP8266 WiFi Shield"],
+    "Boards_WiFi/ESP8266_Standalone"             : ["ESP8266", "ESP8266 WiFi"],
+    "Boards_WiFi/ESP8266_Standalone_SSL"         : ["ESP8266", "ESP8266 WiFi"],
 
-    "Boards_Bluetooth/Adafruit_Bluefruit_LE"     : ["", ""],
-    "Boards_Bluetooth/Adafruit_Feather_32u4_BLE" : ["", ""],
-    "Boards_Bluetooth/Arduino_101_BLE"           : ["", ""],
-    "Boards_Bluetooth/BBC_MicroBit"              : ["", ""],
-    "Boards_Bluetooth/DFRobot_Bluno_BLE_Link"    : ["", ""],
-    "Boards_Bluetooth/Energia_BLE"               : ["", ""],
-    "Boards_Bluetooth/LightBlue_Bean"            : ["", ""],
-    "Boards_Bluetooth/Microduino_BLE"            : ["", ""],
-    "Boards_Bluetooth/nRF8001"                   : ["", ""],
-    "Boards_Bluetooth/RedBear_Duo_BLE"           : ["", ""],
-    "Boards_Bluetooth/RedBearLab_BLE_Mini"       : ["", ""],
-    "Boards_Bluetooth/RedBearLab_BLE_Nano"       : ["", ""],
-    "Boards_Bluetooth/RedBearLab_BlendMicro"     : ["", ""],
-    "Boards_Bluetooth/RFDuino_BLE"               : ["", ""],
-    "Boards_Bluetooth/Serial_HC05_HC06"          : ["", ""],
-    "Boards_Bluetooth/Serial_HM10_HC08"          : ["", ""],
-    "Boards_Bluetooth/Simblee_BLE"               : ["", ""],
-    "Boards_Bluetooth/TheAirBoard_BLE_Link"      : ["", ""],
+    //"Boards_WiFi/Fishino"                        : ["", ""],
+    //"Boards_WiFi/Intel_Edison_WiFi"              : ["Intel Edison", "Arduino WiFi Shield"],
+    //"Boards_WiFi/LinkItONE"                      : ["", ""],
+    //"Boards_WiFi/RedBear_Duo_WiFi"               : ["", ""],
+    //"Boards_WiFi/RN_XV_WiFly"                    : ["", ""],
+    //"Boards_WiFi/Sparkfun_Blynk_Board"           : ["", ""],
+    //"Boards_WiFi/TheAirBoard_WiFly"              : ["", ""],
+    //"Boards_WiFi/TinyDuino_WiFi"                 : ["", ""],
+    //"Boards_WiFi/WildFire_V3"                    : ["", ""],
+    //"Boards_WiFi/WildFire_V4"                    : ["", ""],
+    //
+    //"Boards_Bluetooth/Adafruit_Bluefruit_LE"     : ["", ""],
+    //"Boards_Bluetooth/Adafruit_Feather_32u4_BLE" : ["", ""],
+    "Boards_Bluetooth/Arduino_101_BLE"           : ["Arduino 101", "Arduino 101 BLE"],
+    //"Boards_Bluetooth/BBC_MicroBit"              : ["", ""],
+    //"Boards_Bluetooth/DFRobot_Bluno_BLE_Link"    : ["", ""],
+    //"Boards_Bluetooth/Energia_BLE"               : ["", ""],
+    //"Boards_Bluetooth/LightBlue_Bean"            : ["", ""],
+    //"Boards_Bluetooth/Microduino_BLE"            : ["", ""],
+    "Boards_Bluetooth/nRF8001"                   : ["Arduino Uno", "nRF8001"],
+    //"Boards_Bluetooth/RedBear_Duo_BLE"           : ["", ""],
+    //"Boards_Bluetooth/RedBearLab_BLE_Mini"       : ["", ""],
+    //"Boards_Bluetooth/RedBearLab_BLE_Nano"       : ["", ""],
+    //"Boards_Bluetooth/RedBearLab_BlendMicro"     : ["", ""],
+    //"Boards_Bluetooth/RFDuino_BLE"               : ["", ""],
+    //"Boards_Bluetooth/Serial_HC05_HC06"          : ["", ""],
+    //"Boards_Bluetooth/Serial_HM10_HC08"          : ["", ""],
+    //"Boards_Bluetooth/Simblee_BLE"               : ["", ""],
+    //"Boards_Bluetooth/TheAirBoard_BLE_Link"      : ["", ""],
 
-    "Boards_GSM/SIM800_SIM900"                   : ["", ""],
+    "Boards_GSM/SIM800_SIM900"                   : ["Arduino Uno", "SimCOM SIM800"],
 
-    "Boards_Ethernet/Arduino_Ethernet"           : ["", ""],
-    "Boards_Ethernet/Arduino_Ethernet_Manual"    : ["", ""],
-    "Boards_Ethernet/Arduino_Ethernet2"          : ["", ""],
-    "Boards_Ethernet/ENC28J60"                   : ["", ""],
-    "Boards_Ethernet/Energia_Ethernet"           : ["", ""],
-    "Boards_Ethernet/Intel_Galileo"              : ["", ""],
-    "Boards_Ethernet/Seeed_EthernetV2_0"         : ["", ""],
+    "Boards_Ethernet/Arduino_Ethernet"           : ["Arduino Uno", "Ethernet Shield W5100"],
+    //"Boards_Ethernet/Arduino_Ethernet_Manual"    : ["Arduino Uno", ""],
+    "Boards_Ethernet/Arduino_Ethernet2"          : ["Arduino Uno", "Ethernet Shield W5500"],
+    "Boards_Ethernet/ENC28J60"                   : ["Arduino Uno", "ENC28J60"],
+    "Boards_Ethernet/Energia_Ethernet"           : ["Arduino Uno", "Ethernet Shield W5100"],
+    "Boards_Ethernet/Intel_Galileo"              : ["Arduino Uno", "Ethernet Shield W5100"],
+    "Boards_Ethernet/Seeed_EthernetV2_0"         : ["Arduino Uno", "Ethernet Shield W5200"],
 
-    "Boards_USB_Serial/Arduino_Serial_USB"       : ["", ""],
-    "Boards_USB_Serial/Arduino_SoftwareSerial"   : ["", ""],
-    "Boards_USB_Serial/Arduino_Zero_M0_Serial"   : ["", ""],
-    "Boards_USB_Serial/ATtiny85"                 : ["", ""],
-    "Boards_USB_Serial/Blue_Pill_STM32F103C"     : ["", ""],
-    "Boards_USB_Serial/chipKIT_Uno32"            : ["", ""],
-    "Boards_USB_Serial/Digistump_Digispark"      : ["", ""],
-    "Boards_USB_Serial/Energia_Serial_USB"       : ["", ""],
-    "Boards_USB_Serial/Teensy3"                  : ["", ""]
+    "Boards_USB_Serial/Arduino_Serial_USB"       : ["Arduino Uno", "Serial or USB"],
+    "Boards_USB_Serial/Arduino_SoftwareSerial"   : ["Arduino Uno", "SoftwareSerial"],
+    "Boards_USB_Serial/Arduino_Zero_M0_Serial"   : ["Arduino Zero", "Serial or USB"],
+    //"Boards_USB_Serial/ATtiny85"                 : ["", ""],
+    "Boards_USB_Serial/Blue_Pill_STM32F103C"     : ["Arduino Uno", "Serial or USB"],
+    "Boards_USB_Serial/chipKIT_Uno32"            : ["Arduino Uno", "Serial or USB"],
+    //"Boards_USB_Serial/Digistump_Digispark"      : ["", ""],
+    "Boards_USB_Serial/Energia_Serial_USB"       : ["Arduino Uno", "Serial or USB"],
+    "Boards_USB_Serial/Teensy3"                  : ["Arduino Uno", "Serial or USB"],
   };
-/*
+
   Object.keys(boards_presets).forEach((k) => {
     var ino = k.split(path.sep).slice(-1)[0] + ".ino";
     console.log(ino);
@@ -147,5 +148,5 @@ if (cmd === "gen") {
     var sketch = gen.generate(...args, "Simple");
     fs.writeFileSync("./examples/" + k + "/" + ino, sketch);
   });
-*/
+
 }
