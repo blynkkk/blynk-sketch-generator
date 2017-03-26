@@ -75,7 +75,7 @@ if (cmd === "gen") {
   });
 
   const boards_presets = {
-    //"Boards_WiFi/Adafruit_Feather_M0_WiFi"       : ["", ""],
+    "Boards_WiFi/Adafruit_Feather_M0_WiFi"       : ["Arduino Uno", "Arduino WiFi Shield 101"],
     "Boards_WiFi/Arduino_MKR1000"                : ["Arduino MKR1000", "Arduino WiFi Shield 101"],
     "Boards_WiFi/Arduino_WiFi_Shield"            : ["Arduino Uno", "Arduino WiFi Shield"],
     "Boards_WiFi/Arduino_WiFi_Shield_101"        : ["Arduino Uno", "Arduino WiFi Shield 101"],
@@ -86,16 +86,17 @@ if (cmd === "gen") {
     "Boards_WiFi/ESP32_WiFi"                     : ["ESP32", "ESP32 WiFi"],
     "Boards_WiFi/ESP8266_Shield"                 : ["ESP8266", "ESP8266 WiFi Shield"],
     "Boards_WiFi/ESP8266_Standalone"             : ["ESP8266", "ESP8266 WiFi"],
-    "Boards_WiFi/ESP8266_Standalone_SSL"         : ["ESP8266", "ESP8266 WiFi"],
+    "Boards_WiFi/ESP8266_Standalone_SSL"         : ["ESP8266", "ESP8266 WiFi (SSL)"],
+    "Boards_WiFi/Sparkfun_Blynk_Board"           : ["ESP8266", "ESP8266 WiFi"],
+    "Boards_WiFi/NodeMCU"                        : ["ESP8266", "ESP8266 WiFi"],
 
     //"Boards_WiFi/Fishino"                        : ["", ""],
     //"Boards_WiFi/Intel_Edison_WiFi"              : ["Intel Edison", "Arduino WiFi Shield"],
     //"Boards_WiFi/LinkItONE"                      : ["", ""],
     //"Boards_WiFi/RedBear_Duo_WiFi"               : ["", ""],
-    //"Boards_WiFi/RN_XV_WiFly"                    : ["", ""],
-    //"Boards_WiFi/Sparkfun_Blynk_Board"           : ["", ""],
-    //"Boards_WiFi/TheAirBoard_WiFly"              : ["", ""],
-    //"Boards_WiFi/TinyDuino_WiFi"                 : ["", ""],
+    "Boards_WiFi/RN_XV_WiFly"                    : ["Arduino Uno", "RN-XV WiFly"],
+    "Boards_WiFi/TheAirBoard_WiFly"              : ["Arduino Uno", "RN-XV WiFly"],
+    "Boards_WiFi/TinyDuino_WiFi"                 : ["Arduino Uno", "CC3000"],
     //"Boards_WiFi/WildFire_V3"                    : ["", ""],
     //"Boards_WiFi/WildFire_V4"                    : ["", ""],
     //
@@ -113,8 +114,8 @@ if (cmd === "gen") {
     //"Boards_Bluetooth/RedBearLab_BLE_Nano"       : ["", ""],
     //"Boards_Bluetooth/RedBearLab_BlendMicro"     : ["", ""],
     //"Boards_Bluetooth/RFDuino_BLE"               : ["", ""],
-    //"Boards_Bluetooth/Serial_HC05_HC06"          : ["", ""],
-    //"Boards_Bluetooth/Serial_HM10_HC08"          : ["", ""],
+    "Boards_Bluetooth/Serial_HC05_HC06"          : ["Arduino Uno", "HC05 or HC06"],
+    "Boards_Bluetooth/Serial_HM10_HC08"          : ["Arduino Uno", "HM10 or HC08"],
     //"Boards_Bluetooth/Simblee_BLE"               : ["", ""],
     //"Boards_Bluetooth/TheAirBoard_BLE_Link"      : ["", ""],
 
