@@ -113,6 +113,7 @@ SoftwareSerial SwSerial(10, 11); // RX, TX
   code = code.replace(/\r\n/g, "\n");
   code = code.replace(/\n[\s]*[\b]\n/g, "\n");
   code = code.replace(/[\b]/g,"");
+  code += "\n\n";
 
   return code;
 }
