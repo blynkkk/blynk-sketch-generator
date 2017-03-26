@@ -1737,14 +1737,19 @@ void checkPin()
     glob: `
 WidgetLED led1(V1);
 
+// We make these values volatile, as they are used in interrupt context
+volatile bool pinChanged = false;
+volatile int  pinValue   = 0;
+
+// Most boards won't send data to WiFi out of interrupt handler.
+// We just store the value and process it in the main loop.
 void checkPin()
 {
   // Invert state, since button is "Active LOW"
-  if (digitalRead(2)) {
-    led1.off();
-  } else {
-    led1.on();
-  }
+  pinValue = !digitalRead(2);
+
+  // Mark pin value changed
+  pinChanged = true;
 }
     `,
     init: `
@@ -1753,6 +1758,21 @@ void checkPin()
   // Attach INT to our handler
   attachInterrupt(digitalPinToInterrupt(2), checkPin, CHANGE);
     `,
+    loop: `
+
+  if (pinChanged) {
+
+    // Process the value
+    if (pinValue) {
+      led1.on();
+    } else {
+      led1.off();
+    }
+
+    // Clear the mark, as we have processed the value
+    pinChanged = false;
+  }
+    `
   },
   /***********************************************/
   "More/Sync/HardwareSyncStateFromApp" : {
