@@ -3,6 +3,9 @@
 const examples = {
   /*
   "Simple" : {
+    comment : `
+  Feel free to apply it to any other example. It's simple!
+    `,
   },
   */
   /***********************************************************
@@ -138,6 +141,82 @@ servo.attach(9);
     `,
   },
 
+
+  /***********************************************/
+  "GettingStarted/VirtualPinRead" : {
+    comment : `
+  This sketch shows how to read values from Virtual Pins
+
+  App project setup:
+    Slider widget (0...100) on Virtual Pin V1
+    `,
+    glob: `
+// This function will be called every time Slider Widget
+// in Blynk app writes values to the Virtual Pin V1
+BLYNK_WRITE(V1)
+{
+  int pinValue = param.asInt(); // assigning incoming value from pin V1 to a variable
+
+  // process received value
+}
+    `
+  },
+  /***********************************************/
+  "GettingStarted/VirtualPinReply" : {
+    comment : `
+  This example shows how to send requested values to the Blynk App
+
+  Project setup in the app:
+    Value Display widget attached to V5. Set any reading
+    frequency (i.e. 1 second)
+    `,
+    glob: `
+// This function is called when there is a Widget
+// which is requesting data from Virtual Pin (5)
+BLYNK_READ(V5)
+{
+  // This command writes Arduino's uptime in seconds to Virtual Pin (5)
+  Blynk.virtualWrite(V5, millis() / 1000);
+}
+
+    `
+  },
+  /***********************************************/
+  "GettingStarted/VirtualPinWrite" : {
+    comment : `
+  This sketch shows how to write values to Virtual Pins
+  WARNING :
+  For this example you'll need SimpleTimer library:
+    https://github.com/jfturcot/SimpleTimer
+  Visit this page for more information:
+    http://playground.arduino.cc/Code/SimpleTimer
+  App project setup:
+    Value Display widget attached to Virtual Pin V5
+    `,
+    inc: `
+#include <SimpleTimer.h>
+    `,
+    glob: `
+SimpleTimer timer;
+
+// This function sends Arduino's up time every second to Virtual Pin (5).
+// In the app, Widget's reading frequency should be set to PUSH. This means
+// that you define how often to send data to Blynk App.
+void myTimerEvent()
+{
+  // You can send any value at any time.
+  // Please don't send more that 10 values per second.
+  Blynk.virtualWrite(V5, millis() / 1000);
+}
+    `,
+    init: `
+  // Setup a function to be called every second
+  timer.setInterval(1000L, myTimerEvent);
+    `,
+    loop: `
+  timer.run(); // Initiates SimpleTimer
+    `
+  },
 
   /***********************************************************
    * Widgets
