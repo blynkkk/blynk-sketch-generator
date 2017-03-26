@@ -207,18 +207,20 @@ $(function() {
     });
   }
 
-  function reGenerate() {
+  function reGenerate(noPushState) {
     var board = $("#board-list option:selected").val();
     var shield = $("#shield-list option:selected").val();
     var example = $("#example-list option:selected").val();
     var auth = $("#auth-token").val();
 
-    window.history.pushState([board, shield, example, auth], board,
+    if (!noPushState) {
+      window.history.pushState([board, shield, example, auth], board,
             "?board=" + encodeURIComponent(board) +
             "&shield=" + encodeURIComponent(shield) +
             "&example=" + encodeURIComponent(example) +
             (auth !== "" ? "&auth=" + encodeURIComponent(auth) : "")
-    );
+      );
+    }
 
     $.ajax({
       url : "/generate?b=" + board + "&s=" + shield + "&e=" + example + (auth ? "&a=" + encodeURIComponent(auth) : ""),
@@ -297,7 +299,7 @@ $(function() {
     window.open(url, "_blank");
   });
 
-      function init(board, shield, example, auth) {
+      function init(board, shield, example, auth, noPushState) {
           var tmp;
           var boardParam = ((tmp = getUrlParameter("board")) ? tmp : board);
           var shieldParam = ((tmp = getUrlParameter("shield")) ? tmp : shield);
@@ -316,13 +318,19 @@ $(function() {
                       $("#example-list").val(exampleParam);
                       $("#auth-token").val(authParam);
 
-                      reGenerate();
+                      reGenerate(noPushState);
                   });
               });
           });
       }
 
-    init("ESP8266", "ESP8266 WiFi", "GettingStarted/BlynkBlink", "");
+  window.addEventListener('popstate', function(event) {
+    //if (event.state)
+    init("ESP8266", "ESP8266 WiFi", "GettingStarted/BlynkBlink", "", true);
+  }, false);
+
+  init("ESP8266", "ESP8266 WiFi", "GettingStarted/BlynkBlink", "");
+
 });
 
   </script>
