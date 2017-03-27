@@ -1,6 +1,8 @@
 # blynk-sketch-generator
 This repository is for generating [Blynk](http://www.blynk.cc) sketches.
 
+http://examples.blynk.cc/
+
 # Installation
 
 ##Install nodejs
