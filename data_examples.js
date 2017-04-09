@@ -60,20 +60,15 @@ BLYNK_WRITE(V1)
   This example shows how value can be pushed from Arduino to
   the Blynk App.
 
-  WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-  Visit this page for more information:
+  NOTE:
+  BlynkTimer provides SimpleTimer functionality:
     http://playground.arduino.cc/Code/SimpleTimer
 
   App project setup:
-    Value Display widget attached to V5
-    `,
-    inc: `
-#include <SimpleTimer.h>
+    Value Display widget attached to Virtual Pin V5
     `,
     glob: `
-SimpleTimer timer;
+BlynkTimer timer;
 
 // This function sends Arduino's up time every second to Virtual Pin (5).
 // In the app, Widget's reading frequency should be set to PUSH. This means
@@ -90,7 +85,7 @@ void myTimerEvent()
   timer.setInterval(1000L, myTimerEvent);
     `,
     loop: `
-  timer.run(); // Initiates SimpleTimer
+  timer.run(); // Initiates BlynkTimer
     `
   },
   /***********************************************/
@@ -185,19 +180,16 @@ BLYNK_READ(V5)
   "GettingStarted/VirtualPinWrite" : {
     comment : `
   This sketch shows how to write values to Virtual Pins
-  WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-  Visit this page for more information:
+
+  NOTE:
+  BlynkTimer provides SimpleTimer functionality:
     http://playground.arduino.cc/Code/SimpleTimer
+
   App project setup:
     Value Display widget attached to Virtual Pin V5
     `,
-    inc: `
-#include <SimpleTimer.h>
-    `,
     glob: `
-SimpleTimer timer;
+BlynkTimer timer;
 
 // This function sends Arduino's up time every second to Virtual Pin (5).
 // In the app, Widget's reading frequency should be set to PUSH. This means
@@ -214,7 +206,7 @@ void myTimerEvent()
   timer.setInterval(1000L, myTimerEvent);
     `,
     loop: `
-  timer.run(); // Initiates SimpleTimer
+  timer.run(); // Initiates BlynkTimer
     `
   },
 
@@ -231,22 +223,13 @@ void myTimerEvent()
     bridge.digitalWrite("A0", LOW) // <- target needs to support "Named pins"
     bridge.analogWrite(3, 123)
     bridge.virtualWrite(V1, "hello")
-
-  WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-  Visit this page for more information:
-    http://playground.arduino.cc/Code/SimpleTimer
-    `,
-    inc: `
-#include <SimpleTimer.h>
     `,
     glob: `
 // Bridge widget on virtual pin 1
 WidgetBridge bridge1(V1);
 
 // Timer for blynking
-SimpleTimer timer;
+BlynkTimer timer;
 
 static bool value = true;
 void blynkAnotherDevice() // Here we will send HIGH or LOW once per second
@@ -345,11 +328,8 @@ void emailOnButtonPress()
       b) When V0 is equal to 0, set V1 to 0;
     Led widget on V1 pin
     `,
-    inc: `
-#include <SimpleTimer.h>
-    `,
     glob: `
-SimpleTimer timer;
+BlynkTimer timer;
 boolean flag = true;
 
 void sendFlagToServer() {
@@ -440,11 +420,8 @@ BLYNK_WRITE(V1) {
     - Type into first edit field "/pin0/ seconds"
     - Type into second edit field "/pin1/ millis"
     `,
-    inc: `
-#include <SimpleTimer.h>
-    `,
     glob: `
-SimpleTimer timer;
+BlynkTimer timer;
 
 void sendSeconds() {
   Blynk.virtualWrite(V0, millis() / 1000);
@@ -514,19 +491,11 @@ WidgetLCD lcd(V1);
   App project setup:
     LED widget on V1
 
-  WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-  Visit this page for more information:
-    http://playground.arduino.cc/Code/SimpleTimer
-    `,
-    inc: `
-#include <SimpleTimer.h>
     `,
     glob: `
 WidgetLED led1(V1);
 
-SimpleTimer timer;
+BlynkTimer timer;
 
 // V1 LED Widget is blinking
 void blinkLedWidget()
@@ -555,18 +524,11 @@ void blinkLedWidget()
   App project setup:
     LED widget on V1
 
-  WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-  Visit this page for more information:
-    http://playground.arduino.cc/Code/SimpleTimer
     `,
-    inc: `
-#include <SimpleTimer.h>
-`,  glob: `
+    glob: `
 WidgetLED led1(V1);
 
-SimpleTimer timer;
+BlynkTimer timer;
 bool ledStatus = false;
 
 #define BLYNK_GREEN     "#23C48E"
@@ -605,19 +567,11 @@ void blinkLedWidget()
   App project setup:
     LED widget on V2
 
-  WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-  Visit this page for more information:
-    http://playground.arduino.cc/Code/SimpleTimer
-    `,
-    inc: `
-#include <SimpleTimer.h>
     `,
     glob: `
 WidgetLED led2(V2);
 
-SimpleTimer timer;
+BlynkTimer timer;
 
 // V2 LED Widget is fading
 void fadeLedWidget()
@@ -648,15 +602,6 @@ void fadeLedWidget()
 
   App project setup:
     LED widget on V3
-
-  WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-  Visit this page for more information:
-    http://playground.arduino.cc/Code/SimpleTimer
-    `,
-    inc: `
-#include <SimpleTimer.h>
     `,
     glob: `
 // Select your pin with physical button
@@ -664,7 +609,7 @@ const int btnPin = 1;
 
 WidgetLED led3(V3);
 
-SimpleTimer timer;
+BlynkTimer timer;
 
 // V3 LED Widget represents the physical button state
 boolean btnState = false;
@@ -817,11 +762,8 @@ void notifyOnButtonPress()
   Connect a button to pin 2 and GND...
   Pressing this button will also push a message! ;)
     `,
-    inc: `
-#include <SimpleTimer.h>
-    `,
     glob: `
-SimpleTimer timer;
+BlynkTimer timer;
 
 void notifyUptime()
 {
@@ -856,22 +798,18 @@ void notifyUptime()
     Value Display widget on V2
 
   WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-
-  And also this Time keeping library:
+  For this example you'll need Time keeping library:
     https://github.com/PaulStoffregen/Time
 
   This code is based on an example from the Time library:
     https://github.com/PaulStoffregen/Time/blob/master/examples/TimeSerial/TimeSerial.ino
     `,
     inc: `
-#include <SimpleTimer.h>
 #include <TimeLib.h>
 #include <WidgetRTC.h>
     `,
     glob: `
-SimpleTimer timer;
+BlynkTimer timer;
 
 WidgetRTC rtc;
 
@@ -919,11 +857,8 @@ void clockDisplay()
   App project setup:
     RTC widget (no pin required)
     `,
-    inc: `
-#include <SimpleTimer.h>
-    `,
     glob: `
-SimpleTimer timer;
+BlynkTimer timer;
 
 void requestTime() {
   Blynk.sendInternal("rtc", "sync");
@@ -951,11 +886,8 @@ BLYNK_WRITE(InternalPinRTC) {
   App project setup:
     Default Table widget on V1
     `,
-    inc: `
-#include <SimpleTimer.h>
-    `,
     glob: `
-SimpleTimer timer;
+BlynkTimer timer;
 int rowIndex = 0;
 
 void sendEvent() {
@@ -1196,11 +1128,8 @@ BLYNK_WRITE(V5)
   Connect a button to pin 2 and GND...
   Pressing this button will also tweet a message! ;)
     `,
-    inc: `
-#include <SimpleTimer.h>
-    `,
     glob: `
-SimpleTimer timer;
+BlynkTimer timer;
 
 void tweetUptime()
 {
@@ -1279,9 +1208,7 @@ BLYNK_WRITE(V0)
   the Blynk App.
 
   WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-  and Adafruit DHT sensor libraries:
+  For this example you'll need Adafruit DHT sensor libraries:
     https://github.com/adafruit/Adafruit_Sensor
     https://github.com/adafruit/DHT-sensor-library
 
@@ -1290,7 +1217,6 @@ BLYNK_WRITE(V0)
     Value Display widget attached to V6
     `,
     inc: `
-#include <SimpleTimer.h>
 #include <DHT.h>
     `,
     glob: `
@@ -1302,7 +1228,7 @@ BLYNK_WRITE(V0)
 //#define DHTTYPE DHT21   // DHT 21, AM2301
 
 DHT dht(DHTPIN, DHTTYPE);
-SimpleTimer timer;
+BlynkTimer timer;
 
 // This function sends Arduino's up time every second to Virtual Pin (5).
 // In the app, Widget's reading frequency should be set to PUSH. This means
@@ -1329,7 +1255,7 @@ void sendSensor()
   timer.setInterval(1000L, sendSensor);
     `,
     loop: `
-  timer.run(); // Initiates SimpleTimer
+  timer.run();
     `
   },
   /***********************************************/
@@ -1337,20 +1263,11 @@ void sendSensor()
     comment : `
   You can construct and display any strings on a Value Display.
 
-  WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-  Visit this page for more information:
-    http://playground.arduino.cc/Code/SimpleTimer
-
   App project setup:
     Value Display widget attached to V5
     `,
-    inc: `
-#include <SimpleTimer.h>
-    `,
     glob: `
-SimpleTimer timer;
+BlynkTimer timer;
 
 // This function sends Arduino's up time every second to Virtual Pin (5).
 // In the app, Widget's reading frequency should be set to PUSH. This means
@@ -1465,11 +1382,8 @@ BLYNK_READ_DEFAULT() {
   Project setup in the Blynk app (not necessary):
     Value display on V0 in PUSH mode.
     `,
-    inc: `
-#include <SimpleTimer.h>
-    `,
     glob: `
-SimpleTimer timer;
+BlynkTimer timer;
 int uptimeCounter;
 
 // This function will run every time Blynk connection is established
@@ -1508,11 +1422,8 @@ void increment() {
   Project setup in the Blynk app (not necessary):
     Value display on V1 in PUSH mode.
     `,
-    inc: `
-#include <SimpleTimer.h>
-    `,
     glob: `
-SimpleTimer timer;
+BlynkTimer timer;
 int uptimeCounter;
 String someStaticData = "SomeStaticData";
 
@@ -1626,23 +1537,14 @@ BLYNK_WRITE(V1) {
   You can turn it on and of using a button,
   and control frequency with a slider.
 
-  WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-  Visit this page for more information:
-    http://playground.arduino.cc/Code/SimpleTimer
-
   App project setup:
     Button widget (Switch) on V1
     Slider widget (100...1000) on V2
     `,
-    inc: `
-#include <SimpleTimer.h>
-    `,
     glob: `
 #define LED_PIN 9
 
-SimpleTimer timer;
+BlynkTimer timer;
 int t1;
 
 // Toggle LED
@@ -1827,22 +1729,15 @@ BLYNK_WRITE(V2)
   This example shows how to synchronize Button widget
   and physical button state.
 
-  WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-
   App project setup:
     Button widget attached to V2 (Switch mode)
-    `,
-    inc: `
-#include <SimpleTimer.h>
     `,
     glob: `
 // Set your LED and physical button pins here
 const int ledPin = 7;
 const int btnPin = 8;
 
-SimpleTimer timer;
+BlynkTimer timer;
 void checkPhysicalButton();
 
 int ledState = LOW;

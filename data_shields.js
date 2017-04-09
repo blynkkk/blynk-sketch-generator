@@ -537,10 +537,6 @@ char pass[] = "YourPassword";
   /***********************************************/
   "Particle WiFi" : {
     embedded: true,
-    comment: `
-  NOTE:    It is recommended to use SparkCorePolledTimer library
-           to make periodic actions (similar to SimpleTimer on Arduino).
-    `,
     inc: `
 #include <blynk.h>
     `,
@@ -552,10 +548,6 @@ char pass[] = "YourPassword";
   /***********************************************/
   "Particle Cellular" : {
     embedded: true,
-    comment: `
-  NOTE:    It is recommended to use SparkCorePolledTimer library
-           to make periodic actions (similar to SimpleTimer on Arduino).
-    `,
     inc: `
 // Uncomment this, if you want to set network credentials
 //#include "cellular_hal.h"
