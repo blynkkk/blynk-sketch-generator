@@ -542,7 +542,7 @@ char pass[] = "YourPassword";
            to make periodic actions (similar to SimpleTimer on Arduino).
     `,
     inc: `
-#include "blynk/blynk.h"
+#include <blynk.h>
     `,
     init: `
   delay(5000); // Allow board to settle
@@ -572,7 +572,7 @@ char pass[] = "YourPassword";
 // Each ping uses 121 bytes of data.
 #define PARTICLE_KEEPALIVE 20
 
-#include "blynk/blynk.h"
+#include <blynk.h>
     `,
     init: `
   delay(2000);
