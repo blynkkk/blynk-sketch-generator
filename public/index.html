@@ -96,19 +96,27 @@
     position: absolute;
   }
 
-  a:link, a:visited, a:active {
+  .hljs a:link, .hljs a:visited, .hljs a:active {
     color: #23C890;
   }
 
-  a:hover {
+  .hljs a:hover {
     color: blue;
+  }
+
+  .left a:link, .left a:visited, .left a:active {
+    color: #fff;
+  }
+
+  .left a:hover {
+    color: #fff;
   }
 
   </style>
 </head>
 <body>
   <div class="left">
-    <img alt="Blynk" src="logo.png" height=64 />
+    <img alt="Blynk" src="logo.png" height="64" />
     <div>
       <label>Board:</label><br/>
       <select name="board" id="board-list"></select>
@@ -116,6 +124,9 @@
     <div>
       <label>Connection:</label><br/>
       <select name="shield" id="shield-list"></select>
+    </div>
+    <div class="note" style="padding: 10px 0 20px 0">
+      Full list of supported hardware is <b><a href="https://github.com/blynkkk/blynkkk.github.io/blob/master/SupportedHardware.md">here</a></b>
     </div>
     <div>
       <label>Auth Token:</label><br/>
