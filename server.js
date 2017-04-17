@@ -2,6 +2,10 @@
 
 //http://localhost:8080/generate?b=Arduino%20Uno&s=Simple%20Ethernet&e=Widgets/RTC
 
+var host = 'test.blynk.cc';
+var httpPort = 8080;
+var httpsPort = 8443;
+
 var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -9,10 +13,14 @@ var serveStatic = require('serve-static');
 var favicon = require('serve-favicon');
 var hljs = require('highlight.js');
 
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
+var sslPath = '/etc/letsencrypt/live/' + host +'/';
+
 var gen   = require("./index.js");
 
 var app = express();
-var port = process.env.PORT || 8080;
 var publicPath = path.resolve('./public/');
 
 app.use(favicon(__dirname + '/public/favicon.png'));
@@ -95,8 +103,16 @@ app.get('/generate.html', function(req, res) {
   res.send(html);
 });
 
+http.createServer(function(req, res) {
+    res.writeHead(301, {"Location": "https://" + host + req.url});
+    res.end();})
+    .listen(httpPort);
 
-var server = app.listen(port);
-var address = server.address();
-var serverLocation = "http://localhost:"+address.port+"/";
-console.log("Server running at", serverLocation);
+https.createServer({
+                      key: fs.readFileSync(sslPath + 'privkey.pem'),
+                      cert: fs.readFileSync(sslPath + 'fullchain.pem')
+                   }, app)
+    .listen(httpsPort);
+
+console.log("Server running at", "http://" + host + ":" + httpPort);
+console.log("Server running at", "https://" + host + ":" + httpsPort);
