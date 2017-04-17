@@ -2,7 +2,7 @@
 
 //http://localhost:8080/generate?b=Arduino%20Uno&s=Simple%20Ethernet&e=Widgets/RTC
 
-var host = 'test.blynk.cc';
+var host = 'examples.blynk.cc';
 var httpPort = 8080;
 var httpsPort = 8443;
 
