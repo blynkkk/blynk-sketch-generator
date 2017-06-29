@@ -215,7 +215,6 @@ const boards = {
   "Arduino Duemilanove"      : { inherit: "Arduino Uno" },
   "Arduino Pro"              : { inherit: "Arduino Uno" },
 
-  "Arduino UNO WiFi"         : { inherit: "Arduino Uno", builtin: ["ESP8266 WiFi Shield"] },
   "Arduino Ethernet"         : { inherit: "Arduino Uno", builtin: ["Ethernet Shield W5100"] },
   "Arduino Leonardo ETH"     : { inherit: "Arduino Leonardo", builtin: ["Ethernet Shield W5500"] },
   "Arduino Industrial 101"   : { inherit: "Arduino Yun" },
