@@ -123,8 +123,8 @@ char pass[] = "YourPassword";
   "ESP8266 WiFi Shield"     : {
     comment: `
   WARNING!
-    It's rather tricky to get it working, please read this article:
-    https://github.com/blynkkk/blynk-library/wiki/ESP8266-with-AT-firmware
+    It's very tricky to get it working. Please read this article:
+    http://help.blynk.cc/hardware-and-libraries/arduino/esp8266-with-at-firmware
     `,
     inc: `
 #include <ESP8266_Lib.h>
