@@ -67,7 +67,8 @@ const shields = {
   For this example you need UIPEthernet library:
     https://github.com/UIPEthernet/UIPEthernet
 
-  Typical wiring would be:
+  Typical wiring would be (this is for Arduino UNO,
+  search for correct wiring for your board):
    VCC -- 5V
    GND -- GND
    CS  -- D10
