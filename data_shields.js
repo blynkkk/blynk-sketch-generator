@@ -21,8 +21,8 @@ const shields = {
 
   Blynk.begin(auth);
   // You can also specify server:
-  //Blynk.begin(auth, "blynk-cloud.com", 8442);
-  //Blynk.begin(auth, IPAddress(192,168,1,100), 8442);
+  //Blynk.begin(auth, "blynk-cloud.com", 80);
+  //Blynk.begin(auth, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -43,8 +43,8 @@ const shields = {
 
   Blynk.begin(auth);
   // You can also specify server:
-  //Blynk.begin(auth, "blynk-cloud.com", 8442);
-  //Blynk.begin(auth, IPAddress(192,168,1,100), 8442);
+  //Blynk.begin(auth, "blynk-cloud.com", 80);
+  //Blynk.begin(auth, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -57,8 +57,8 @@ const shields = {
     init: `
   Blynk.begin(auth);
   // You can also specify server:
-  //Blynk.begin(auth, "blynk-cloud.com", 8442);
-  //Blynk.begin(auth, IPAddress(192,168,1,100), 8442);
+  //Blynk.begin(auth, "blynk-cloud.com", 80);
+  //Blynk.begin(auth, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -84,8 +84,8 @@ const shields = {
     init: `
   Blynk.begin(auth);
   // You can also specify server:
-  //Blynk.begin(auth, "blynk-cloud.com", 8442);
-  //Blynk.begin(auth, IPAddress(192,168,1,100), 8442);
+  //Blynk.begin(auth, "blynk-cloud.com", 80);
+  //Blynk.begin(auth, IPAddress(192,168,1,100), 8080);
     `
   },
 
@@ -116,8 +116,8 @@ char pass[] = "YourPassword";
     init: `
   Blynk.begin(auth, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8442);
-  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8442);
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 80);
+  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -156,8 +156,8 @@ ESP8266 wifi(&EspSerial);
 
   Blynk.begin(auth, wifi, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, wifi, ssid, pass, "blynk-cloud.com", 8442);
-  //Blynk.begin(auth, wifi, ssid, pass, IPAddress(192,168,1,100), 8442);
+  //Blynk.begin(auth, wifi, ssid, pass, "blynk-cloud.com", 80);
+  //Blynk.begin(auth, wifi, ssid, pass, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -476,8 +476,8 @@ char pass[] = "YourPassword";
     init: `
   Blynk.begin(auth, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8442);
-  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8442);
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 80);
+  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -496,8 +496,8 @@ char pass[] = "YourPassword";
     init: `
   Blynk.begin(auth, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8442);
-  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8442);
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 80);
+  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -517,8 +517,8 @@ char pass[] = "YourPassword";
     init: `
   Blynk.begin(auth, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8442);
-  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8442);
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 80);
+  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -531,8 +531,8 @@ char pass[] = "YourPassword";
     init: `
   Blynk.begin(auth);
   // You can also specify server:
-  //Blynk.begin(auth, "blynk-cloud.com", 8442);
-  //Blynk.begin(auth, IPAddress(192,168,1,100), 8442);
+  //Blynk.begin(auth, "blynk-cloud.com", 80);
+  //Blynk.begin(auth, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
