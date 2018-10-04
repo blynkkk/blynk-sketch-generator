@@ -145,7 +145,7 @@ char pass[] = "YourPassword";
 //SoftwareSerial EspSerial(2, 3); // RX, TX
 
 // Your ESP8266 baud rate:
-#define ESP8266_BAUD 115200
+#define ESP8266_BAUD 38400
 
 ESP8266 wifi(&EspSerial);
     `,
