@@ -63,9 +63,7 @@ void loop()
 
 `;
 
-const Raspberry = {
-  serial_dbg: "stdout",
-  template: header_comment + `
+const RaspberryTemplate = header_comment + `
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT <%= serial_dbg %>
 
@@ -112,7 +110,11 @@ int main(int argc, char* argv[])
   return 0;
 }
 
-`
+`;
+
+const Raspberry = {
+  template: RaspberryTemplate,
+  serial_dbg: "stdout",
 };
 
 const ArduinoRegular = {

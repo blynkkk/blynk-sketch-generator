@@ -281,10 +281,6 @@ BLESerial SerialBLE(BLE_REQ, BLE_RDY, BLE_RST);
     `,
     inc: `
 #include <BlynkSimpleSerialBLE.h>
-#include <SoftwareSerial.h>
-    `,
-    glob : `
-SoftwareSerial SerialBLE(10, 11); // RX, TX
     `,
     init: `
   SerialBLE.begin(9600);

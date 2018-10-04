@@ -87,7 +87,7 @@ function generate(board, shield, example, auth_token) {
     data.board.inc = `
 #include <SoftwareSerial.h>
 SoftwareSerial SwSerial(10, 11); // RX, TX
-    ` + data.board.inc;
+${data.board.inc}`;
 
   }
   
@@ -113,6 +113,7 @@ SoftwareSerial SwSerial(10, 11); // RX, TX
   code = code.replace(/\r\n/g, "\n");
   code = code.replace(/\n[\s]*[\b]\n/g, "\n");
   code = code.replace(/[\b]/g,"");
+  //code = code.replace(/\n\n\n/g, "\n\n");
   code += "\n\n";
 
   return code;

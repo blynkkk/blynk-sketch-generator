@@ -3,9 +3,6 @@
 const examples = {
   /*
   "Simple" : {
-    comment : `
-  Feel free to apply it to any other example. It's simple!
-    `,
   },
   */
   /***********************************************************
@@ -280,16 +277,18 @@ BLYNK_CONNECTED() {
   Connect a button to digital pin 2 and GND
   Pressing this button will send an e-mail
 
-  WARNING: You are limited to send ONLY ONE E-MAIL PER 15 SECONDS!
+  WARNING: You are limited to send ONLY ONE E-MAIL PER 5 SECONDS!
     `,
     defs : `
 /* Set this to a bigger number, to enable sending longer messages */
 //#define BLYNK_MAX_SENDBYTES 128
     `,
     glob: `
+unsigned count = 0;
+
 void emailOnButtonPress()
 {
-  // *** WARNING: You are limited to send ONLY ONE E-MAIL PER 15 SECONDS! ***
+  // *** WARNING: You are limited to send ONLY ONE E-MAIL PER 5 SECONDS! ***
 
   // Let's send an e-mail when you press the button
   // connected to digital pin 2 on your Arduino
@@ -299,7 +298,12 @@ void emailOnButtonPress()
   if (isButtonPressed) // You can write any condition to trigger e-mail sending
   {
     <%= serial_dbg %>.println("Button is pressed."); // This can be seen in the Serial Monitor
-    Blynk.email("your_email@mail.com", "Subject: Button Logger", "You just pushed the button...");
+
+    count++;
+
+    String body = String("You pushed the button ") + count + " times.";
+
+    Blynk.email("your_email@mail.com", "Subject: Button Logger", body);
 
     // Or, if you want to use the email specified in the App (like for App Export):
     //Blynk.email("Subject: Button Logger", "You just pushed the button...");
@@ -739,8 +743,12 @@ void notifyOnButtonPress()
     <%= serial_dbg %>.println("Button is pressed.");
 
     // Note:
-    //   We allow 1 notification per 15 seconds for now.
+    //   We allow 1 notification per 5 seconds for now.
     Blynk.notify("Yaaay... button is pressed!");
+
+    // You can also use {DEVICE_NAME} placeholder for device name,
+    // that will be replaced by your device name on the server side.
+    //Blynk.notify("Yaaay... {DEVICE_NAME}  button is pressed!");
   }
 }
     `,
@@ -771,8 +779,12 @@ void notifyUptime()
 
   // Actually send the message.
   // Note:
-  //   We allow 1 notification per 15 seconds for now.
+  //   We allow 1 notification per 5 seconds for now.
   Blynk.notify(String("Running for ") + uptime + " minutes.");
+
+  // You can also use {DEVICE_NAME} placeholder for device name,
+  // that will be replaced by your device name on the server side.
+  // Blynk.notify(String("{DEVICE_NAME} running for ") + uptime + " minutes.");
 }
     `,
     init: `
@@ -832,14 +844,18 @@ void clockDisplay()
   // Send date to the App
   Blynk.virtualWrite(V2, currentDate);
 }
+
+BLYNK_CONNECTED() {
+  // Synchronize time on connection
+  rtc.begin();
+}
     `,
     init: `
-  // Begin synchronizing time
-  rtc.begin();
-
   // Other Time library functions can be used, like:
   //   timeStatus(), setSyncInterval(interval)...
   // Read more: http://www.pjrc.com/teensy/td_libs_Time.html
+
+  setSyncInterval(10 * 60); // Sync interval in seconds (10 minutes)
 
   // Display digital clock every 10 seconds
   timer.setInterval(10000L, clockDisplay);
@@ -995,6 +1011,9 @@ BLYNK_WRITE(V1)
 }
     `,
     init: `
+  // Clear the terminal content
+  terminal.clear();
+
   // This will print Blynk Software version to the Terminal Widget when
   // your hardware gets connected to Blynk Server
   terminal.println(F("Blynk v" BLYNK_VERSION ": Device started"));
@@ -1138,7 +1157,7 @@ void tweetUptime()
 
   // Actually send the message.
   // Note:
-  //   We allow 1 tweet per 15 seconds for now.
+  //   We allow 1 tweet per 5 seconds for now.
   //   Twitter doesn't allow identical subsequent messages.
   Blynk.tweet(String("Running for ") + uptime + " minutes.");
 }
@@ -1689,20 +1708,13 @@ void checkPin()
     `,
     glob: `
 
-// Keep this flag not to re-sync on every reconnection
-bool isFirstConnect = true;
-
 // This function will run every time Blynk connection is established
 BLYNK_CONNECTED() {
-  if (isFirstConnect) {
-    // Request Blynk server to re-send latest values for all pins
-    Blynk.syncAll();
+  // Request Blynk server to re-send latest values for all pins
+  Blynk.syncAll();
 
-    // You can also update individual virtual pins like this:
-    //Blynk.syncVirtual(V0, V2);
-
-    isFirstConnect = false;
-  }
+  // You can also update individual virtual pins like this:
+  //Blynk.syncVirtual(V0, V2);
 
   // Let's write your hardware uptime to Virtual Pin 2
   int value = millis() / 1000;
