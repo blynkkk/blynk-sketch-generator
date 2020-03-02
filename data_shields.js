@@ -310,10 +310,6 @@ BLESerial SerialBLE(BLE_REQ, BLE_RDY, BLE_RST);
   /***********************************************************/
   "SimCOM SIM800" : {
     comment: `
-
-  Attention! Please check out TinyGSM guide:
-    http://tiny.cc/tiny-gsm-readme
-
   WARNING: GSM modem support is for BETA testing.
     `,
     defs: `
@@ -382,11 +378,7 @@ TinyGsm modem(SerialAT);
     need_serial: true,
     swap_serial: true,
     name: "Hardware Serial or USB",
-    comment : `
-  =>
-  =>          USB HOWTO: http://tiny.cc/BlynkUSB
-  =>
-    `,
+    comment : ``,
     inc: `
 #include <BlynkSimpleStream.h>
     `,
@@ -400,11 +392,7 @@ TinyGsm modem(SerialAT);
   /***********************************************/
   "Serial1" : {
     name: "Hardware Serial1",
-    comment : `
-  =>
-  =>          USB HOWTO: http://tiny.cc/BlynkUSB
-  =>
-    `,
+    comment : ``,
     inc: `
 #include <BlynkSimpleStream.h>
     `,
@@ -417,11 +405,7 @@ TinyGsm modem(SerialAT);
   },
   /***********************************************/
   "SoftwareSerial" : {
-    comment : `
-  =>
-  =>          USB HOWTO: http://tiny.cc/BlynkUSB
-  =>
-    `,
+    comment : ``,
     inc: `
 #include <BlynkSimpleStream.h>
 #include <SoftwareSerial.h>
