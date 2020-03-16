@@ -245,6 +245,8 @@ WiFly wifly;
   Warning: Bluetooth support is in beta!
     `,
     inc: `
+#define BLYNK_USE_DIRECT_CONNECT
+
 #include <BlynkSimpleSerialBLE.h>
 #include <BLEPeripheral.h>
 #include "BLESerial.h"
@@ -280,6 +282,8 @@ BLESerial SerialBLE(BLE_REQ, BLE_RDY, BLE_RST);
   Warning: Bluetooth support is in beta!
     `,
     inc: `
+#define BLYNK_USE_DIRECT_CONNECT
+
 #include <BlynkSimpleSerialBLE.h>
     `,
     init: `
