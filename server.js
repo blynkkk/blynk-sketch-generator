@@ -46,8 +46,10 @@ app.get('/generate', function(req, res) {
   var shield = req.query.s;
   var example = req.query.e;
   var auth = req.query.a;
-  
-  res.send(gen.generate(board, shield, example, auth));
+  var tmpl = req.query.t;
+  var devname = req.query.n;
+
+  res.send(gen.generate(board, shield, example, auth, tmpl, devname));
 });
 
 
@@ -56,8 +58,10 @@ app.get('/generate.html', function(req, res) {
   var shield = req.query.s;
   var example = req.query.e;
   var auth = req.query.a;
-  
-  var code = gen.generate(board, shield, example, auth);
+  var tmpl = req.query.t;
+  var devname = req.query.n;
+
+  var code = gen.generate(board, shield, example, auth, tmpl, devname);
   var html = hljs.highlight("arduino", code).value;
   
   html =

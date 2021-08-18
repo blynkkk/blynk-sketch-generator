@@ -11,7 +11,7 @@ const examples = {
   "GettingStarted/BlynkBlink" : {
     comment : `
   You’ll need:
-   - Blynk App (download from AppStore or Google Play)
+   - Blynk IoT app (download from App Store or Google Play)
    - <%= name %> board
    - Decide how to connect to Blynk
      (USB, Ethernet, Wi-Fi, Bluetooth, ...)
@@ -23,6 +23,56 @@ const examples = {
   example.
     `,
     loop: `
+  // You can inject your own code or combine it with other sketches.
+  // Check other examples on how to communicate with Blynk. Remember
+  // to avoid delay() function!
+    `
+  },
+  "GettingStarted/BlynkSimpleDemo" : {
+    comment : `
+  You’ll need:
+   - Blynk IoT app (download from App Store or Google Play)
+   - <%= name %> board
+   - Decide how to connect to Blynk
+     (USB, Ethernet, Wi-Fi, Bluetooth, ...)
+
+  This is a simple demo of sending and receiving some data.
+  Be sure to check out other examples!
+    `,
+    glob: `
+BlynkTimer timer;
+
+// This function is called every time the Virtual Pin 0 state changes
+BLYNK_WRITE(V0)
+{
+  // Set incoming value from pin V0 to a variable
+  int value = param.asInt();
+
+  // Update state
+  Blynk.virtualWrite(V1, value);
+}
+
+// This function is called every time the device is connected to the Blynk.Cloud
+BLYNK_CONNECTED()
+{
+  // Change Image Gallery image to "Congratulations!"
+  Blynk.virtualWrite(V3, 1);
+}
+
+// This function sends Arduino's uptime every second to Virtual Pin 2.
+void myTimerEvent()
+{
+  // You can send any value at any time.
+  // Please don't send more that 10 values per second.
+  Blynk.virtualWrite(V2, millis() / 1000);
+}
+    `,
+    init: `
+  // Setup a function to be called every second
+  timer.setInterval(1000L, myTimerEvent);
+    `,
+    loop: `
+  timer.run();
   // You can inject your own code or combine it with other sketches.
   // Check other examples on how to communicate with Blynk. Remember
   // to avoid delay() function!

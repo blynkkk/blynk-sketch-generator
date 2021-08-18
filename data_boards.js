@@ -10,7 +10,7 @@ const header_comment =
   You can easily build graphic interfaces for all your
   projects by simply dragging and dropping widgets.
 
-    Downloads, docs, tutorials: http://www.blynk.cc
+    Downloads, docs, tutorials: http://www.blynk.io
     Sketch generator:           http://examples.blynk.cc
     Blynk community:            http://community.blynk.cc
     Follow us:                  http://www.fb.com/blynkapp
@@ -27,7 +27,14 @@ const header_comment =
 `;
 
 const ArduinoRegularTemplate = header_comment + `
-/* Comment this out to disable prints and save space */
+// Template ID, Device Name and Auth Token are provided by the Blynk.Cloud
+// See the Device Info tab, or Template settings
+#define BLYNK_TEMPLATE_ID           "<%= tmpl_id %>"
+#define BLYNK_DEVICE_NAME           "<%= dev_name %>"
+#define BLYNK_AUTH_TOKEN            "<%= auth %>"
+
+
+// Comment this out to disable prints and save space
 #define BLYNK_PRINT <%= serial_dbg %>
 
 <%= board.defs %>
@@ -36,9 +43,7 @@ const ArduinoRegularTemplate = header_comment + `
 <%= board.inc %>
 <%= example.inc %>
 
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "<%= auth %>";
+char auth[] = BLYNK_AUTH_TOKEN;
 
 <%= board.glob %>
 
@@ -47,7 +52,7 @@ char auth[] = "<%= auth %>";
 void setup()
 {
   // Debug console
-  <%= serial_dbg %>.begin(9600);
+  <%= serial_dbg %>.begin(115200);
 
   <%= board.init %>
 
@@ -64,7 +69,12 @@ void loop()
 `;
 
 const RaspberryTemplate = header_comment + `
-/* Comment this out to disable prints and save space */
+// Template ID and Device Name are provided by the Blynk.Cloud.
+// See the Device Info tab, or Template settings
+#define BLYNK_TEMPLATE_ID           "<%= tmpl_id %>"
+#define BLYNK_DEVICE_NAME           "<%= dev_name %>"
+
+// Comment this out to disable prints and save space
 #define BLYNK_PRINT <%= serial_dbg %>
 
 #ifdef RASPBERRY

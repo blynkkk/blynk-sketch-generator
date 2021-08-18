@@ -129,7 +129,15 @@
       Full list of supported hardware is <b><a href="https://github.com/blynkkk/blynkkk.github.io/blob/master/SupportedHardware.md">here</a></b>
     </div>
     <div>
-      <label>Auth Token (optional):</label><br/>
+      <label>Template ID:</label><br/>
+      <input name="tmpl" id="template-id" type="text" >
+    </div>
+    <div>
+      <label>Device Name:</label><br/>
+      <input name="devname" id="device-name" type="text" >
+    </div>
+    <div>
+      <label>Auth Token:</label><br/>
       <input name="auth" id="auth-token" type="text" >
     </div>
     <br/>
@@ -223,18 +231,25 @@ $(function() {
     var shield = $("#shield-list option:selected").val();
     var example = $("#example-list option:selected").val();
     var auth = $("#auth-token").val();
+    var dev_name = $("#device-name").val();
+    var tmpl_id = $("#template-id").val();
 
     if (!noPushState) {
       window.history.pushState([board, shield, example, auth], board,
             "?board=" + encodeURIComponent(board) +
             "&shield=" + encodeURIComponent(shield) +
             "&example=" + encodeURIComponent(example) +
-            (auth !== "" ? "&auth=" + encodeURIComponent(auth) : "")
+            (auth !== "" ? "&auth=" + encodeURIComponent(auth) : "") +
+            (dev_name !== "" ? "&dev=" + encodeURIComponent(dev_name) : "") +
+            (tmpl_id !== "" ? "&tmpl=" + encodeURIComponent(tmpl_id) : "")
       );
     }
 
     $.ajax({
-      url : "/generate?b=" + board + "&s=" + shield + "&e=" + example + (auth ? "&a=" + encodeURIComponent(auth) : ""),
+      url : "/generate?b=" + board + "&s=" + shield + "&e=" + example +
+                    (auth ? "&a=" + encodeURIComponent(auth) : "") +
+                    (dev_name ? "&n=" + encodeURIComponent(dev_name) : "") +
+                    (tmpl_id ? "&t=" + encodeURIComponent(tmpl_id) : ""),
       dataType: "text",
       success : function (data) {
         data = hljs.highlight("blynk-arduino", data).value;
@@ -304,6 +319,12 @@ $(function() {
 
   $("#auth-token").change(onAuthChange);
   $("#auth-token").keyup(onAuthChange);
+  
+  $("#template-id").change(onAuthChange);
+  $("#template-id").keyup(onAuthChange);
+  
+  $("#device-name").change(onAuthChange);
+  $("#device-name").keyup(onAuthChange);
 
   $("#reportproblem").click(function() {
     var url = "https://github.com/blynkkk/blynk-sketch-generator/issues";
@@ -316,6 +337,8 @@ $(function() {
           var shieldParam = ((tmp = getUrlParameter("shield")) ? tmp : shield);
           var exampleParam = ((tmp = getUrlParameter("example")) ? tmp : example);
           var authParam = ((tmp = getUrlParameter("auth")) ? tmp : auth);
+          var tmplParam = ((tmp = getUrlParameter("tmpl")) ? tmp : "");
+          var devnameParam = ((tmp = getUrlParameter("dev")) ? tmp : "");
 
           $.getJSON( "/listBoards", function(data) {
               fillOptions($("#board-list"), data);
@@ -328,6 +351,8 @@ $(function() {
                       $("#shield-list").val(shieldParam);
                       $("#example-list").val(exampleParam);
                       $("#auth-token").val(authParam);
+                      $("#template-id").val(tmplParam);
+                      $("#device-name").val(devnameParam);
 
                       reGenerate(noPushState);
                   });
