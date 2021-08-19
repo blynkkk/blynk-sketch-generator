@@ -49,6 +49,7 @@ app.get('/generate', function(req, res) {
   var tmpl = req.query.t;
   var devname = req.query.n;
 
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.send(gen.generate(board, shield, example, auth, tmpl, devname));
 });
 
@@ -104,6 +105,7 @@ app.get('/generate.html', function(req, res) {
 </html>
 `;
 
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.send(html);
 });
 
