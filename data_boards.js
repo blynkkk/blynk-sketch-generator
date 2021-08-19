@@ -2,24 +2,6 @@
 
 const header_comment =
 `/*************************************************************
-  Download latest Blynk library here:
-    https://github.com/blynkkk/blynk-library/releases/latest
-
-  Blynk is a platform with iOS and Android apps to control
-  Arduino, Raspberry Pi and the likes over the Internet.
-  You can easily build graphic interfaces for all your
-  projects by simply dragging and dropping widgets.
-
-    Downloads, docs, tutorials: http://www.blynk.io
-    Sketch generator:           http://examples.blynk.cc
-    Blynk community:            http://community.blynk.cc
-    Follow us:                  http://www.fb.com/blynkapp
-                                http://twitter.com/blynk_app
-
-  Blynk library is licensed under MIT license
-  This example code is in public domain.
-
- *************************************************************
   <%= board.comment %>
 
   <%= example.comment %>
@@ -154,7 +136,7 @@ const boards = {
     exclude: [/.*/]
   },
   "ESP32" : {
-    builtin: ["ESP32 WiFi"], // TODO: "BLE"
+    builtin: ["ESP32 WiFi", "ESP32 WiFi (SSL)"], // TODO: "BLE"
     exclude: [/.*/]
   },
   "NodeMCU"                : { inherit: "ESP8266" },
@@ -162,6 +144,15 @@ const boards = {
   "Adafruit Huzzah"        : { inherit: "ESP8266" },
   "SparkFun Blynk Board"   : { inherit: "ESP8266" },
   "SparkFun ESP8266 Thing" : { inherit: "ESP8266" },
+  
+  /***********************************************/
+  "--- Seeed Studio" : {},
+  /***********************************************/
+  "Wio Terminal" : {
+    builtin: ["rpcWiFi", "rpcWiFi (SSL)"],
+    exclude: [/.*/]
+  },
+
   /***********************************************/
   "--- Linux (C++)" : {},
   /***********************************************/

@@ -476,8 +476,8 @@ char pass[] = "YourPassword";
     init: `
   Blynk.begin(auth, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
-  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8080);
+  //Blynk.begin(auth, ssid, pass, "blynk.cloud", 443);
+  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8443);
     `
   },
   /***********************************************/
@@ -502,6 +502,27 @@ char pass[] = "YourPassword";
     `
   },
   /***********************************************/
+  "ESP32 WiFi (SSL)" : {
+    embedded: true,
+    inc: `
+#include <WiFi.h>
+#include <WiFiClient.h>
+#include <BlynkSimpleEsp32_SSL.h>
+    `,
+    glob : `
+// Your WiFi credentials.
+// Set password to "" for open networks.
+char ssid[] = "YourNetworkName";
+char pass[] = "YourPassword";
+    `,
+    init: `
+  Blynk.begin(auth, ssid, pass);
+  // You can also specify server:
+  //Blynk.begin(auth, ssid, pass, "blynk.cloud", 443);
+  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8443);
+    `
+  },
+  /***********************************************/
   "Yun Bridge" : {
     embedded: true,
     inc: `
@@ -513,6 +534,36 @@ char pass[] = "YourPassword";
   // You can also specify server:
   //Blynk.begin(auth, "blynk.cloud", 80);
   //Blynk.begin(auth, IPAddress(192,168,1,100), 8080);
+    `
+  },
+  /***********************************************/
+  "rpcWiFi" : {
+    embedded: true,
+    inc: `
+#include <rpcWiFi.h>
+#include <WiFiClient.h>
+#include <BlynkSimpleWioTerminal.h>
+    `,
+    init: `
+  Blynk.begin(auth);
+  // You can also specify server:
+  //Blynk.begin(auth, "blynk.cloud", 80);
+  //Blynk.begin(auth, IPAddress(192,168,1,100), 8080);
+    `
+  },
+  /***********************************************/
+  "rpcWiFi (SSL)" : {
+    embedded: true,
+    inc: `
+#include <rpcWiFi.h>
+#include <WiFiClient.h>
+#include <BlynkSimpleWioTerminal_SSL.h>
+    `,
+    init: `
+  Blynk.begin(auth);
+  // You can also specify server:
+  //Blynk.begin(auth, "blynk.cloud", 443);
+  //Blynk.begin(auth, IPAddress(192,168,1,100), 8443);
     `
   },
   /***********************************************/
