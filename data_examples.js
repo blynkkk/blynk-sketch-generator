@@ -30,12 +30,6 @@ const examples = {
   },
   "GettingStarted/BlynkSimpleDemo" : {
     comment : `
-  You’ll need:
-   - Blynk IoT app (download from App Store or Google Play)
-   - <%= name %> board
-   - Decide how to connect to Blynk
-     (USB, Ethernet, Wi-Fi, Bluetooth, ...)
-
   This is a simple demo of sending and receiving some data.
   Be sure to check out other examples!
     `,
