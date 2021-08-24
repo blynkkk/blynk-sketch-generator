@@ -50,8 +50,8 @@ BLYNK_WRITE(V0)
 BLYNK_CONNECTED()
 {
   // Change Web Link Button message to "Congratulations!"
-  Blynk.setProperty(V3, "offButtonImage", "https://static-image.nyc3.cdn.digitaloceanspaces.com/general/fte/congratulations.png");
-  Blynk.setProperty(V3, "onButtonImage",  "https://static-image.nyc3.cdn.digitaloceanspaces.com/general/fte/congratulations_pressed.png");
+  Blynk.setProperty(V3, "offImageUrl", "https://static-image.nyc3.cdn.digitaloceanspaces.com/general/fte/congratulations.png");
+  Blynk.setProperty(V3, "onImageUrl",  "https://static-image.nyc3.cdn.digitaloceanspaces.com/general/fte/congratulations_pressed.png");
   Blynk.setProperty(V3, "url", "https://docs.blynk.io/en/getting-started/template-quick-setup");
 }
 
