@@ -544,11 +544,17 @@ char pass[] = "YourPassword";
 #include <WiFiClient.h>
 #include <BlynkSimpleWioTerminal.h>
     `,
+    glob : `
+// Your WiFi credentials.
+// Set password to "" for open networks.
+char ssid[] = "YourNetworkName";
+char pass[] = "YourPassword";
+    `,
     init: `
-  Blynk.begin(auth);
+  Blynk.begin(auth, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, "blynk.cloud", 80);
-  //Blynk.begin(auth, IPAddress(192,168,1,100), 8080);
+  //Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
+  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -559,11 +565,17 @@ char pass[] = "YourPassword";
 #include <WiFiClient.h>
 #include <BlynkSimpleWioTerminal_SSL.h>
     `,
+    glob : `
+// Your WiFi credentials.
+// Set password to "" for open networks.
+char ssid[] = "YourNetworkName";
+char pass[] = "YourPassword";
+    `,
     init: `
-  Blynk.begin(auth);
+  Blynk.begin(auth, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, "blynk.cloud", 443);
-  //Blynk.begin(auth, IPAddress(192,168,1,100), 8443);
+  //Blynk.begin(auth, ssid, pass, "blynk.cloud", 443);
+  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8443);
     `
   },
   /***********************************************/
