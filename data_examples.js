@@ -132,31 +132,8 @@ void myTimerEvent()
     `
   },
   /***********************************************/
-  "GettingStarted/PushDataOnRequest" : {
-    comment : `
-  This example shows how to send values to the Blynk App,
-  when there is a widget, attached to the Virtual Pin and it
-  is set to some frequency
-
-  Project setup in the app:
-    Value Display widget attached to V5. Set any reading
-    frequency (i.e. 1 second)
-    `,
-    glob: `
-// Use Virtual pin 5 for uptime display
-#define PIN_UPTIME V5
-
-// This function tells Arduino what to do if there is a Widget
-// which is requesting data for Virtual Pin (5)
-BLYNK_READ(PIN_UPTIME)
-{
-  // This command writes Arduino's uptime in seconds to Virtual Pin (5)
-  Blynk.virtualWrite(PIN_UPTIME, millis() / 1000);
-}
-    `
-  },
-  /***********************************************/
   "GettingStarted/Servo" : {
+    //TODO: exclude_devices: ["ESP32"],
     comment : `
   Rotate a servo using a slider!
 
@@ -200,26 +177,6 @@ BLYNK_WRITE(V1)
     `
   },
   /***********************************************/
-  "GettingStarted/VirtualPinReply" : {
-    comment : `
-  This example shows how to send requested values to the Blynk App
-
-  Project setup in the app:
-    Value Display widget attached to V5. Set any reading
-    frequency (i.e. 1 second)
-    `,
-    glob: `
-// This function is called when there is a Widget
-// which is requesting data from Virtual Pin (5)
-BLYNK_READ(V5)
-{
-  // This command writes Arduino's uptime in seconds to Virtual Pin (5)
-  Blynk.virtualWrite(V5, millis() / 1000);
-}
-
-    `
-  },
-  /***********************************************/
   "GettingStarted/VirtualPinWrite" : {
     comment : `
   This sketch shows how to write values to Virtual Pins
@@ -256,63 +213,6 @@ void myTimerEvent()
   /***********************************************************
    * Widgets
    ***********************************************************/
-  "Widgets/Bridge" : {
-    comment : `
-  Control another device using Bridge widget!
-
-  Bridge is initialized with the token of any (Blynk-enabled) device.
-  After that, use the familiar functions to control it:
-    bridge.digitalWrite(8, HIGH)
-    bridge.digitalWrite("A0", LOW) // <- target needs to support "Named pins"
-    bridge.analogWrite(3, 123)
-    bridge.virtualWrite(V1, "hello")
-    `,
-    glob: `
-// Bridge widget on virtual pin 1
-WidgetBridge bridge1(V1);
-
-// Timer for blynking
-BlynkTimer timer;
-
-static bool value = true;
-void blynkAnotherDevice() // Here we will send HIGH or LOW once per second
-{
-  // Send value to another device
-  if (value) {
-    bridge1.digitalWrite(9, HIGH);  // Digital Pin 9 on the second board will be set HIGH
-    bridge1.virtualWrite(V5, 1); // Sends 1 value to BLYNK_WRITE(V5) handler on receiving side.
-
-    /////////////////////////////////////////////////////////////////////////////////////////
-    // Keep in mind that when performing virtualWrite with Bridge,
-    // second board will need to process the incoming command.
-    // It can be done by using this handler on the second board:
-    //
-    //    BLYNK_WRITE(V5){
-    //    int pinData = param.asInt(); // pinData variable will store value that came via Bridge
-    //    }
-    //
-    /////////////////////////////////////////////////////////////////////////////////////////
-  } else {
-    bridge1.digitalWrite(9, LOW); // Digital Pin 9 on the second board will be set LOW
-    bridge1.virtualWrite(V5, 0); // Sends 0 value to BLYNK_WRITE(V5) handler on receiving side.
-  }
-  // Toggle value
-  value = !value;
-}
-
-BLYNK_CONNECTED() {
-  bridge1.setAuthToken("OtherAuthToken"); // Place the AuthToken of the second hardware here
-}
-    `,
-    init: `
-  // Call blynkAnotherDevice every second
-  timer.setInterval(1000L, blynkAnotherDevice);
-    `,
-    loop: `
-  timer.run();
-    `
-  },
-  /***********************************************/
   "Widgets/Joystick" : {
     comment : `
   Datastreams setup:
@@ -371,29 +271,6 @@ void sendMillis() {
     loop: `
   timer.run();
     `
-  },
-  /***********************************************/
-  "Widgets/LCD/LCD_SimpleModeReading" : {
-    comment : `
-  Output any data on LCD widget!
-
-  App dashboard setup:
-    LCD widget, SIMPLE mode, in widget settings :
-    - Select pin V0 for zero pin
-    - Select pin V1 for first pin
-    - Leave "Reading Frequency" on "1 sec" interval
-    - Type into first edit field "/pin0/ seconds"
-    - Type into second edit field "/pin1/ millis"
-    `,
-    glob: `
-BLYNK_READ(V0) {
-  Blynk.virtualWrite(V0, millis() / 1000);
-}
-
-BLYNK_READ(V1) {
-  Blynk.virtualWrite(V1, millis());
-}
-    `,
   },
   /***********************************************/
   "Widgets/LCD/LCD_AdvancedMode" : {
@@ -743,89 +620,6 @@ BLYNK_WRITE(InternalPinRTC) {
     `
   },
   /***********************************************/
-  "Widgets/Table/Table_Simple" : {
-    comment : `
-  You can use Table widget for logging events
-
-  App dashboard setup:
-    Default Table widget on V1
-    `,
-    glob: `
-BlynkTimer timer;
-int rowIndex = 0;
-
-void sendEvent() {
-  // adding 1 row to table every second
-  Blynk.virtualWrite(V1, "add", rowIndex, "My Event", millis() / 1000);
-
-  //highlighting latest added row in table
-  Blynk.virtualWrite(V1, "pick", rowIndex);
-
-  rowIndex++;
-}
-    `,
-    init: `
-  //clean table at start
-  Blynk.virtualWrite(V1, "clr");
-
-  //run sendEvent method every second
-  timer.setInterval(1000L, sendEvent);
-    `,
-    loop: `
-  timer.run();
-    `
-  },
-  /***********************************************/
-  "Widgets/Table/Table_Advanced" : {
-    comment : `
-  Use Table widget to display simple value tables or events
-
-  App dashboard setup:
-    Table widget on V1
-    Button widget (push) on V10
-    Button widget (push) on V11
-    `,
-    glob: `
-WidgetTable table;
-BLYNK_ATTACH_WIDGET(table, V1);
-
-int rowIndex = 0;
-
-// Button on V10 adds new items
-BLYNK_WRITE(V10) {
-  if (param.asInt()) {
-    table.addRow(rowIndex, "Test row", millis() / 1000);
-    table.pickRow(rowIndex);
-    rowIndex++;
-  }
-}
-
-// Button on V11 clears the table
-BLYNK_WRITE(V11) {
-  if (param.asInt()) {
-    table.clear();
-    rowIndex = 0;
-  }
-}
-    `,
-    init: `
-  // Setup table event callbacks
-  table.onOrderChange([](int indexFrom, int indexTo) {
-    <%= serial_dbg %>.print("Reordering: ");
-    <%= serial_dbg %>.print(indexFrom);
-    <%= serial_dbg %>.print(" => ");
-    <%= serial_dbg %>.print(indexTo);
-    <%= serial_dbg %>.println();
-  });
-
-  table.onSelectChange([](int index, bool selected) {
-    <%= serial_dbg %>.print("Item ");
-    <%= serial_dbg %>.print(index);
-    <%= serial_dbg %>.print(selected ? " marked" : " unmarked");
-  });
-    `,
-  },
-  /***********************************************/
   "Widgets/Terminal" : {
     comment : `
   You can send/receive any data using WidgetTerminal object.
@@ -957,34 +751,6 @@ BLYNK_WRITE(V1) {
 
   <%= serial_dbg %>.println();
 }
-    `,
-  },
-  /***********************************************/
-  "Widgets/WebHook/WebHook_GET" : {
-    comment : `
-  This example shows how to fetch data using WebHook GET method
-
-  App dashboard setup:
-    WebHook widget on V0, method: GET, url: /pin/
-    `,
-    defs: `
-// Allow for receiving messages up to 512 bytes long
-//#define BLYNK_MAX_READBYTES 512
-    `,
-    glob: `
-BLYNK_WRITE(V0)
-{
-  <%= serial_dbg %>.println("WebHook data:");
-  <%= serial_dbg %>.println(param.asStr());
-}
-    `,
-    init: `
-  Blynk.virtualWrite(V0, "https://raw.githubusercontent.com/blynkkk/blynk-library/master/extras/logo.txt");
-
-  // You can perform HTTPS requests even if your hardware alone can't handle SSL
-  // Blynk  can also fetch much bigger messages,
-  // if hardware has enough RAM (set BLYNK_MAX_READBYTES to 4096)
-  //Blynk.virtualWrite(V0, "https://api.sunrise-sunset.org/json?lat=50.4495484&lng=30.5253873&date=2016-10-01");
     `,
   },
 
@@ -1148,18 +914,6 @@ BLYNK_WRITE_DEFAULT() {
     <%= serial_dbg %>.println(i.asString());
   }
 }
-
-// This is called for all virtual pins, that don't have BLYNK_READ handler
-BLYNK_READ_DEFAULT() {
-  // Generate random response
-  int val = random(0, 100);
-  <%= serial_dbg %>.print("output V");
-  <%= serial_dbg %>.print(request.pin);
-  <%= serial_dbg %>.print(": ");
-  <%= serial_dbg %>.println(val);
-  Blynk.virtualWrite(request.pin, val);
-}
-
     `,
   },
   /***********************************************/
@@ -1418,6 +1172,7 @@ void checkPin()
   },
   /***********************************************/
   "More/Sync/ButtonInterrupt" : {
+    //TODO: exclude_devices: ["Particle Photon"],
     comment : `
   This example shows how to monitor a button state
   using interrupts mechanism.
@@ -1516,8 +1271,8 @@ BLYNK_WRITE(V2)
     `,
     glob: `
 // Set your LED and physical button pins here
-const int ledPin = 7;
-const int btnPin = 8;
+const int ledPin = 13;
+const int btnPin = 12;
 
 BlynkTimer timer;
 void checkPhysicalButton();
@@ -1569,6 +1324,64 @@ void checkPhysicalButton()
     `,
     loop: `
   timer.run();
+    `
+  },
+  /***********************************************/
+  "More/TimeAndLocation" : {
+    comment : `
+  Blynk can provide your device with time and location data.
+  NOTE: the accuracy of this method is up to several seconds.
+    `,
+    glob: `
+BLYNK_CONNECTED() {
+    // Send requests for different internal data
+    // Request what is actually needed for your use-case
+    Blynk.sendInternal("utc", "tz_name");   // Name of timezone
+    Blynk.sendInternal("utc", "iso");       // ISO-8601 formatted time
+    Blynk.sendInternal("utc", "time");      // Unix timestamp (with msecs)
+    Blynk.sendInternal("utc", "tz");        // Timezone and DST offsets
+    Blynk.sendInternal("utc", "tz_rule");   // POSIX TZ rule
+    Blynk.sendInternal("utc", "dst_next");  // Up to 2 next time offset changes (due to DST)
+}
+
+// Receive UTC data
+BLYNK_WRITE(InternalPinUTC) {
+    String cmd = param[0].asStr();
+    if (cmd == "time") {
+        uint64_t utc_time = param[1].asLongLong();
+        Serial.print("Unix time (UTC): "); Serial.println((uint32_t)(utc_time/1000));
+
+    } else if (cmd == "iso") {
+        String iso_time = param[1].asStr();
+        Serial.print("ISO-8601 time:   "); Serial.println(iso_time);
+
+    } else if (cmd == "tz") {
+        long tz_offset = param[1].asInt();
+        long dst_offset = param[2].asInt();
+        Serial.print("TZ offset:       "); Serial.print(tz_offset);  Serial.println(" minutes");
+        Serial.print("DST offset:      "); Serial.print(dst_offset); Serial.println(" minutes");
+
+    } else if (cmd == "tz_name") {
+        String tz_name = param[1].asStr();
+        Serial.print("Timezone:        "); Serial.println(tz_name);
+
+    } else if (cmd == "tz_rule") {
+        String tz_rule = param[1].asStr();
+        Serial.print("POSIX TZ rule:   "); Serial.println(tz_rule);
+
+    } else if (cmd == "dst_next") {
+        uint32_t next1_ts  = param[1].asLong();
+        int next1_off      = param[2].asInt();
+        uint32_t next2_ts  = param[3].asLong();
+        int next2_off      = param[4].asInt();
+
+        Serial.print("Next offset changes: ");
+        Serial.print(next1_off); Serial.print("min. on "); Serial.print(next1_ts);
+        Serial.print(", ");
+        Serial.print(next2_off); Serial.print("min. on "); Serial.print(next2_ts);
+        Serial.println();
+    }
+}
     `
   }
 

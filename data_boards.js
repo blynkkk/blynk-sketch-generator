@@ -131,7 +131,7 @@ const boards = {
     exclude: [/.*/]
   },
   "ESP32" : {
-    builtin: ["ESP32 WiFi", "ESP32 WiFi (SSL)"], // TODO: "BLE"
+    builtin: ["ESP32 WiFi", "ESP32 WiFi (SSL)"],
     exclude: [/.*/]
   },
   "NodeMCU"                : { inherit: "ESP8266" },
@@ -170,15 +170,23 @@ const boards = {
     builtin: ["Arduino WiFi Shield 101"],
     exclude: [/Serial/, /Ethernet/, /WiFly/, /CC3000/]
   },
+  "Arduino MKR1010" :
+  {
+    inherit: "Arduino Zero",
+    builtin: ["WiFiNINA"],
+    exclude: [/Serial/, /WiFly/, /CC3000/]
+  },
+  "Arduino MKR1400" :
+  {
+    inherit: "Arduino Zero",
+    builtin: ["MKRGSM"],
+    exclude: [/Serial/, /WiFly/, /CC3000/]
+  },
   "Arduino MKRZero"          : { inherit: "Arduino MKR1000" },
 
   "Arduino Yun" : {
     builtin: ["Yun Bridge"],
     exclude: [/.*/]
-  },
-  "Arduino 101" : {
-    builtin: ["Arduino 101 BLE"],
-    exclude: [/nRF/, /HC/, /Bluefruit/]
   },
   "Arduino Zero" : {
     inherit: ArduinoUSB

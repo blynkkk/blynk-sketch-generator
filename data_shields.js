@@ -400,6 +400,55 @@ char pass[] = "YourPassword";
     `
   },
   /***********************************************/
+  "WiFiNINA" : {
+    embedded: true,
+    inc: `
+#include <SPI.h>
+#include <WiFiNINA.h>
+#include <BlynkSimpleWiFiNINA.h>
+    `,
+    glob : `
+// Your WiFi credentials.
+// Set password to "" for open networks.
+char ssid[] = "YourNetworkName";
+char pass[] = "YourPassword";
+    `,
+    init: `
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
+  // You can also specify server:
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, "blynk.cloud", 80);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, IPAddress(192,168,1,100), 8080);
+    `
+  },
+  /***********************************************/
+  "MKRGSM" : {
+    embedded: true,
+    comment: `
+  Note: This requires MKRGSM library
+    from https://www.arduino.cc/en/Reference/MKRGSM
+    `,
+    inc: `
+#include <SPI.h>
+#include <MKRGSM.h>
+#include <BlynkSimpleMKRGSM.h>
+    `,
+    glob : `
+// Your SIM and GPRS credentials
+// Leave empty, if missing pin, user or pass
+char pin[]  = "";
+char apn[]  = "YourAPN";
+char user[] = "";
+char pass[] = "";
+
+GSMClient client;
+GPRS gprs;
+GSM gsmAccess;
+    `,
+    init: `
+  Blynk.begin(BLYNK_AUTH_TOKEN, gsmAccess, gprs, client, pin, apn, user, pass);
+    `
+  },
+  /***********************************************/
   "Yun Bridge" : {
     embedded: true,
     inc: `
@@ -494,39 +543,6 @@ char pass[] = "YourPassword";
   Blynk.begin(BLYNK_AUTH_TOKEN, BLYNK_IP);
     `
   },
-  /***********************************************/
-  "Arduino 101 BLE" : {
-    embedded: true,
-    comment: `
-  Note: This requires CurieBLE library
-    from http://librarymanager/all#CurieBLE
-
-  Warning: Bluetooth support is in beta!
-    `,
-    inc: `
-#include <BlynkSimpleCurieBLE.h>
-#include <CurieBLE.h>
-    `,
-    glob : `
-BLEPeripheral  blePeripheral;
-    `,
-    init: `
-  delay(1000);
-
-  blePeripheral.setLocalName("Blynk");
-  blePeripheral.setDeviceName("Blynk");
-  blePeripheral.setAppearance(384);
-
-  Blynk.begin(blePeripheral, BLYNK_AUTH_TOKEN);
-
-  blePeripheral.begin();
-
-  Serial.println("Waiting for connections...");
-    `,
-    loop: `
-  blePeripheral.poll();
-    `
-  }
 };
 
 module.exports = shields;
