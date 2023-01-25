@@ -80,7 +80,7 @@ void myTimerEvent()
   You can use this sketch as a debug tool that prints all incoming values
   sent by a widget connected to a Virtual Pin 1 in the Blynk App.
 
-  App project setup:
+  App dashboard setup:
     Slider widget (0...100) on V1
     `,
     glob: `
@@ -107,7 +107,7 @@ BLYNK_WRITE(V1)
   BlynkTimer provides SimpleTimer functionality:
     http://playground.arduino.cc/Code/SimpleTimer
 
-  App project setup:
+  App dashboard setup:
     Value Display widget attached to Virtual Pin V5
     `,
     glob: `
@@ -160,7 +160,7 @@ BLYNK_READ(PIN_UPTIME)
     comment : `
   Rotate a servo using a slider!
 
-  App project setup:
+  App dashboard setup:
     Slider widget (0...180) on V3
     `,
     inc: `
@@ -185,7 +185,7 @@ servo.attach(9);
     comment : `
   This sketch shows how to read values from Virtual Pins
 
-  App project setup:
+  App dashboard setup:
     Slider widget (0...100) on Virtual Pin V1
     `,
     glob: `
@@ -228,7 +228,7 @@ BLYNK_READ(V5)
   BlynkTimer provides SimpleTimer functionality:
     http://playground.arduino.cc/Code/SimpleTimer
 
-  App project setup:
+  App dashboard setup:
     Value Display widget attached to Virtual Pin V5
     `,
     glob: `
@@ -313,134 +313,15 @@ BLYNK_CONNECTED() {
     `
   },
   /***********************************************/
-  "Widgets/Email" : {
+  "Widgets/Joystick" : {
     comment : `
-  Simple e-mail example
+  Datastreams setup:
+    Add a Virtual Pin Datastream called "Joystick" on V1. Select type: "String".
 
-  App project setup:
-    E-mail Widget
+  App dashboard setup:
+    Add a Joystick widget, select Advanced output mode. Attach it to "Joystick" DS.
 
-  Connect a button to digital pin 2 and GND
-  Pressing this button will send an e-mail
-
-  WARNING: You are limited to send ONLY ONE E-MAIL PER 5 SECONDS!
-    `,
-    defs : `
-/* Set this to a bigger number, to enable sending longer messages */
-//#define BLYNK_MAX_SENDBYTES 128
-    `,
-    glob: `
-unsigned count = 0;
-
-void emailOnButtonPress()
-{
-  // *** WARNING: You are limited to send ONLY ONE E-MAIL PER 5 SECONDS! ***
-
-  // Let's send an e-mail when you press the button
-  // connected to digital pin 2 on your Arduino
-
-  int isButtonPressed = !digitalRead(2); // Invert state, since button is "Active LOW"
-
-  if (isButtonPressed) // You can write any condition to trigger e-mail sending
-  {
-    <%= serial_dbg %>.println("Button is pressed."); // This can be seen in the Serial Monitor
-
-    count++;
-
-    String body = String("You pushed the button ") + count + " times.";
-
-    Blynk.email("your_email@mail.com", "Subject: Button Logger", body);
-
-    // Or, if you want to use the email specified in the App (like for App Export):
-    //Blynk.email("Subject: Button Logger", "You just pushed the button...");
-  }
-}
-    `,
-    init: `
-  // Send e-mail when your hardware gets connected to Blynk Server
-  // Just put the recepient's "e-mail address", "Subject" and the "message body"
-  Blynk.email("your_email@mail.com", "Subject", "My Blynk project is online.");
-
-  // Setting the button
-  pinMode(2, INPUT_PULLUP);
-  // Attach pin 2 interrupt to our handler
-  attachInterrupt(digitalPinToInterrupt(2), emailOnButtonPress, CHANGE);
-    `,
-  },
-  /***********************************************/
-  "Widgets/Eventor" : {
-    comment : `
-  You can use predefined rules on application side.
-
-  Project setup in the Blynk app:
-    Eventor widget with next rules :
-      a) When V0 is equal to 1, set V1 to 255;
-      b) When V0 is equal to 0, set V1 to 0;
-    Led widget on V1 pin
-    `,
-    glob: `
-BlynkTimer timer;
-boolean flag = true;
-
-void sendFlagToServer() {
-  if (flag) {
-    Blynk.virtualWrite(V0, 1);
-  } else {
-    Blynk.virtualWrite(V0, 0);
-  }
-  flag = !flag;
-}
-
-BLYNK_WRITE(V1) {
-  //here you'll get 0 or 255
-  int ledValue = param.asInt();
-}
-    `,
-    init: `
-  // Setup a function to be called every second
-  timer.setInterval(1000L, sendFlagToServer);
-    `,
-    loop: `
-  timer.run();
-    `
-  },
-  /***********************************************/
-  "Widgets/GPS_Stream" : {
-    comment : `
-  App project setup:
-    GPS Stream widget on V1.
-    `,
-    glob: `
-BLYNK_WRITE(V1) {
-  GpsParam gps(param);
-
-  // Print 6 decimal places for Lat, Lon
-  <%= serial_dbg %>.print("Lat: ");
-  <%= serial_dbg %>.println(gps.getLat(), 7);
-
-  <%= serial_dbg %>.print("Lon: ");
-  <%= serial_dbg %>.println(gps.getLon(), 7);
-
-  // Print 2 decimal places for Alt, Speed
-  <%= serial_dbg %>.print("Altitute: ");
-  <%= serial_dbg %>.println(gps.getAltitude(), 2);
-
-  <%= serial_dbg %>.print("Speed: ");
-  <%= serial_dbg %>.println(gps.getSpeed(), 2);
-
-  <%= serial_dbg %>.println();
-}
-
-    `,
-  },
-  /***********************************************/
-  "Widgets/JoystickTwoAxis" : {
-    comment : `
-  You can receive x and y coords for joystick movement within App.
-
-  App project setup:
-    Two Axis Joystick on V1 in MERGE output mode.
-    MERGE mode means device will receive both x and y within 1 message
+  NOTE: Advanced mode means device will receive both x and y on a single Datastream
     `,
     glob: `
 BLYNK_WRITE(V1) {
@@ -456,11 +337,11 @@ BLYNK_WRITE(V1) {
     `,
   },
   /***********************************************/
-  "Widgets/LCD/LCD_SimpleModePushing" : {
+  "Widgets/LCD/LCD_SimpleMode" : {
     comment : `
   Output any data on LCD widget!
 
-  App project setup:
+  App dashboard setup:
 
     LCD widget, SIMPLE mode, in widget settings :
 
@@ -496,7 +377,7 @@ void sendMillis() {
     comment : `
   Output any data on LCD widget!
 
-  App project setup:
+  App dashboard setup:
     LCD widget, SIMPLE mode, in widget settings :
     - Select pin V0 for zero pin
     - Select pin V1 for first pin
@@ -519,7 +400,7 @@ BLYNK_READ(V1) {
     comment : `
   Output any data on LCD widget!
 
-  App project setup:
+  App dashboard setup:
     LCD widget, switch to ADVANCED mode, select pin V1
     `,
     glob: `
@@ -538,7 +419,7 @@ WidgetLCD lcd(V1);
     comment : `
   Blynk using a LED widget on your phone!
 
-  App project setup:
+  App dashboard setup:
     LED widget on V1
 
     `,
@@ -571,7 +452,7 @@ void blinkLedWidget()
     comment: `
   Blynk using a LED widget on your phone!
 
-  App project setup:
+  App dashboard setup:
     LED widget on V1
 
     `,
@@ -614,7 +495,7 @@ void blinkLedWidget()
     comment : `
   Fade using a LED widget on your phone!
 
-  App project setup:
+  App dashboard setup:
     LED widget on V2
 
     `,
@@ -650,7 +531,7 @@ void fadeLedWidget()
     comment : `
   Blynk using a LED widget on your phone!
 
-  App project setup:
+  App dashboard setup:
     LED widget on V3
     `,
     glob: `
@@ -694,7 +575,7 @@ void buttonLedWidget()
     comment : `
   Output any data on Map widget!
 
-  App project setup:
+  App dashboard setup:
     Map widget on V1
     `,
     glob: `
@@ -715,7 +596,7 @@ WidgetMap myMap(V1);
     comment : `
   This example shows how to use the Menu Widget.
 
-  App project setup:
+  App dashboard setup:
     Menu widget attached to V1 (put 3 items in it)
     `,
     glob: `
@@ -738,12 +619,12 @@ BLYNK_WRITE(V1) {
     `,
   },
   /***********************************************/
-  "Widgets/Player" : {
+  "Widgets/MusicPlayer" : {
     comment : `
   This example shows how you can process commands from player widget
 
-  App project setup:
-    Player widget attached to V5 and running project.
+  App dashboard setup:
+    Music Player widget attached to V5
     `,
     glob: `
 BLYNK_WRITE(V5)
@@ -770,88 +651,12 @@ BLYNK_WRITE(V5)
     `,
   },
   /***********************************************/
-  "Widgets/PushNotification/PushNotification_Button" : {
-    comment : `
-  Simple push notification example
-
-  App project setup:
-    Push widget
-
-  Connect a button to pin 2 and GND...
-  Pressing this button will also push a message! ;)
-    `,
-    glob: `
-void notifyOnButtonPress()
-{
-  // Invert state, since button is "Active LOW"
-  int isButtonPressed = !digitalRead(2);
-  if (isButtonPressed) {
-    <%= serial_dbg %>.println("Button is pressed.");
-
-    // Note:
-    //   We allow 1 notification per 5 seconds for now.
-    Blynk.notify("Yaaay... button is pressed!");
-
-    // You can also use {DEVICE_NAME} placeholder for device name,
-    // that will be replaced by your device name on the server side.
-    //Blynk.notify("Yaaay... {DEVICE_NAME}  button is pressed!");
-  }
-}
-    `,
-    init: `
-  // Setup notification button on pin 2
-  pinMode(2, INPUT_PULLUP);
-  // Attach pin 2 interrupt to our handler
-  attachInterrupt(digitalPinToInterrupt(2), notifyOnButtonPress, CHANGE);
-    `,
-  },
-  /***********************************************/
-  "Widgets/PushNotification/PushNotification_Interval" : {
-    comment : `
-  Simple push notification example
-
-  App project setup:
-    Push widget
-
-  Connect a button to pin 2 and GND...
-  Pressing this button will also push a message! ;)
-    `,
-    glob: `
-BlynkTimer timer;
-
-void notifyUptime()
-{
-  long uptime = millis() / 60000L;
-
-  // Actually send the message.
-  // Note:
-  //   We allow 1 notification per 5 seconds for now.
-  Blynk.notify(String("Running for ") + uptime + " minutes.");
-
-  // You can also use {DEVICE_NAME} placeholder for device name,
-  // that will be replaced by your device name on the server side.
-  // Blynk.notify(String("{DEVICE_NAME} running for ") + uptime + " minutes.");
-}
-    `,
-    init: `
-  // Notify immediately on startup
-  Blynk.notify("Device started");
-
-  // Setup a function to be called every minute
-  timer.setInterval(60000L, notifyUptime);
-    `,
-    loop: `
-  timer.run();
-    `
-  },
-  /***********************************************/
   "Widgets/RTC" : {
     comment : `
   Blynk can provide your device with time data, like an RTC.
   Please note that the accuracy of this method is up to several seconds.
 
-  App project setup:
-    RTC widget (no pin required)
+  App dashboard setup:
     Value Display widget on V1
     Value Display widget on V2
 
@@ -915,9 +720,6 @@ BLYNK_CONNECTED() {
     comment : `
   Blynk can provide your device with time data, like an RTC.
   Please note that the accuracy of this method is up to several seconds.
-
-  App project setup:
-    RTC widget (no pin required)
     `,
     glob: `
 BlynkTimer timer;
@@ -945,7 +747,7 @@ BLYNK_WRITE(InternalPinRTC) {
     comment : `
   You can use Table widget for logging events
 
-  App project setup:
+  App dashboard setup:
     Default Table widget on V1
     `,
     glob: `
@@ -978,7 +780,7 @@ void sendEvent() {
     comment : `
   Use Table widget to display simple value tables or events
 
-  App project setup:
+  App dashboard setup:
     Table widget on V1
     Button widget (push) on V10
     Button widget (push) on V11
@@ -1028,7 +830,7 @@ BLYNK_WRITE(V11) {
     comment : `
   You can send/receive any data using WidgetTerminal object.
 
-  App project setup:
+  App dashboard setup:
     Terminal widget attached to Virtual Pin V1
     `,
     glob: `
@@ -1072,7 +874,7 @@ BLYNK_WRITE(V1)
   /***********************************************/
   "Widgets/TimeInput/SimpleTimeInput" : { //TODO
     comment : `
-  App project setup:
+  App dashboard setup:
     Time Input widget on V1 with only start time option.
     `,
     glob: `
@@ -1086,7 +888,7 @@ BLYNK_WRITE(V1) {
   /***********************************************/
   "Widgets/TimeInput/AdvancedTimeInput" : { //TODO
     comment : `
-  App project setup:
+  App dashboard setup:
     Time Input widget on V1.
     `,
     glob: `
@@ -1158,89 +960,11 @@ BLYNK_WRITE(V1) {
     `,
   },
   /***********************************************/
-  "Widgets/Timer" : {
-    comment : `
-  This example shows how LOW/HIGH event may be triggered from
-  Blynk Server to Arduino at specific time.
-
-  Timer widget works for ANALOG and DIGITAL pins also.
-  In this case you don't need to write code.
-  Blynk handles that for you.
-
-  App project setup:
-    Timer widget attached to V5 and running project.
-    `,
-    glob: `
-BLYNK_WRITE(V5)
-{
-  // You'll get HIGH/1 at startTime and LOW/0 at stopTime.
-  // this method will be triggered every day
-  // until you remove widget or stop project or
-  // clean stop/start fields of widget
-  <%= serial_dbg %>.print("Got a value: ");
-  <%= serial_dbg %>.println(param.asStr());
-}
-    `,
-  },
-  /***********************************************/
-  "Widgets/Twitter" : {
-    comment : `
-  Simple tweet example
-
-  App project setup:
-    Twitter widget (connect it to your Twitter account!)
-
-  Connect a button to pin 2 and GND...
-  Pressing this button will also tweet a message! ;)
-    `,
-    glob: `
-BlynkTimer timer;
-
-void tweetUptime()
-{
-  long uptime = millis() / 60000L;
-  <%= serial_dbg %>.println("Tweeting every 10 minutes ;)");
-
-  // Actually send the message.
-  // Note:
-  //   We allow 1 tweet per 5 seconds for now.
-  //   Twitter doesn't allow identical subsequent messages.
-  Blynk.tweet(String("Running for ") + uptime + " minutes.");
-}
-
-void tweetOnButtonPress()
-{
-  // Invert state, since button is "Active LOW"
-  int isButtonPressed = !digitalRead(2);
-  if (isButtonPressed) {
-    <%= serial_dbg %>.println("Button is pressed.");
-
-    Blynk.tweet("Yaaay... button is pressed! :)\\n #arduino #IoT #blynk @blynk_app");
-  }
-}
-    `,
-    init: `
-  // Tweet immediately on startup
-  Blynk.tweet("My Arduino project is tweeting using @blynk_app and it’s awesome!\\n #arduino #IoT #blynk");
-
-  // Setup a function to be called every 10 minutes
-  timer.setInterval(10L * 60000L, tweetUptime);
-
-  // Setup twitter button on pin 2
-  pinMode(2, INPUT_PULLUP);
-  // Attach pin 2 interrupt to our handler
-  attachInterrupt(digitalPinToInterrupt(2), tweetOnButtonPress, CHANGE);
-    `,
-    loop: `
-  timer.run();
-    `
-  },
-  /***********************************************/
   "Widgets/WebHook/WebHook_GET" : {
     comment : `
   This example shows how to fetch data using WebHook GET method
 
-  App project setup:
+  App dashboard setup:
     WebHook widget on V0, method: GET, url: /pin/
     `,
     defs: `
@@ -1277,7 +1001,7 @@ BLYNK_WRITE(V0)
     https://github.com/adafruit/Adafruit_Sensor
     https://github.com/adafruit/DHT-sensor-library
 
-  App project setup:
+  App dashboard setup:
     Value Display widget attached to V5
     Value Display widget attached to V6
     `,
@@ -1328,7 +1052,7 @@ void sendSensor()
     comment : `
   You can construct and display any strings on a Value Display.
 
-  App project setup:
+  App dashboard setup:
     Value Display widget attached to V5
     `,
     glob: `
@@ -1365,7 +1089,7 @@ void sendTemperature()
   For this example you need NeoPixel library:
     https://github.com/adafruit/Adafruit_NeoPixel
 
-  App project setup:
+  App dashboard setup:
     Slider widget (0...500) on V1
     `,
     inc: `
@@ -1602,7 +1326,7 @@ BLYNK_WRITE(V1) {
   You can turn it on and of using a button,
   and control frequency with a slider.
 
-  App project setup:
+  App dashboard setup:
     Button widget (Switch) on V1
     Slider widget (100...1000) on V2
     `,
@@ -1657,7 +1381,7 @@ BLYNK_WRITE(V2)
   This example shows how to monitor a button state
   using polling mechanism.
 
-  App project setup:
+  App dashboard setup:
     LED widget on V1
     `,
     glob: `
@@ -1698,7 +1422,7 @@ void checkPin()
   This example shows how to monitor a button state
   using interrupts mechanism.
 
-  App project setup:
+  App dashboard setup:
     LED widget on V1
     `,
     glob: `
@@ -1787,7 +1511,7 @@ BLYNK_WRITE(V2)
   This example shows how to synchronize Button widget
   and physical button state.
 
-  App project setup:
+  App dashboard setup:
     Button widget attached to V2 (Switch mode)
     `,
     glob: `

@@ -9,14 +9,12 @@ const header_comment =
 `;
 
 const ArduinoRegularTemplate = header_comment + `
-// Template ID, Device Name and Auth Token are provided by the Blynk.Cloud
-// See the Device Info tab, or Template settings
+/* Fill-in information from Blynk Device Info here */
 #define BLYNK_TEMPLATE_ID           "<%= tmpl_id %>"
-#define BLYNK_DEVICE_NAME           "<%= dev_name %>"
+#define BLYNK_TEMPLATE_NAME         "<%= dev_name %>"
 #define BLYNK_AUTH_TOKEN            "<%= auth %>"
 
-
-// Comment this out to disable prints and save space
+/* Comment this out to disable prints and save space */
 #define BLYNK_PRINT <%= serial_dbg %>
 
 <%= board.defs %>
@@ -24,8 +22,6 @@ const ArduinoRegularTemplate = header_comment + `
 
 <%= board.inc %>
 <%= example.inc %>
-
-char auth[] = BLYNK_AUTH_TOKEN;
 
 <%= board.glob %>
 
@@ -51,10 +47,9 @@ void loop()
 `;
 
 const RaspberryTemplate = header_comment + `
-// Template ID and Device Name are provided by the Blynk.Cloud.
-// See the Device Info tab, or Template settings
+/* Fill-in information from Blynk Device Info here */
 #define BLYNK_TEMPLATE_ID           "<%= tmpl_id %>"
-#define BLYNK_DEVICE_NAME           "<%= dev_name %>"
+#define BLYNK_TEMPLATE_NAME         "<%= dev_name %>"
 
 // Comment this out to disable prints and save space
 #define BLYNK_PRINT <%= serial_dbg %>
@@ -235,58 +230,15 @@ const boards = {
   "Particle Electron" : {
     builtin: ["Particle Cellular"],
     exclude: [/.*/]
-  }
-  //"Bluz" : {
-  //  builtin: ["BLE"],
-  //  exclude: [/.*/],
-  //},
-};
-
-const later = {
-  /***********************************************/
-  "--- Intel" : {},
-  /***********************************************/
-  "Intel Edison" : {
-    builtin: ["WiFi"]
   },
-  "Intel Galileo" : {
-    builtin: ["Ethernet"]
+  "Particle Argon" : {
+    builtin: ["Particle WiFi"],
+    exclude: [/.*/]
   },
-  "Intel Curie" : {
-    inherit: "Arduino 101"
+  "Particle Boron" : {
+    builtin: ["Particle Cellular"],
+    exclude: [/.*/]
   },
-  "Intel Joule" : {
-    builtin: ["WiFi", "Ethernet"]
-  },
-  /***********************************************/
-  "--- RedBear" : {},
-  /***********************************************/
-  "RedBear Duo" : {
-    builtin: ["WiFi", "BLE"]
-  },
-  "RedBear BLE Nano" : {
-    builtin: ["BLE"]
-  },
-  "RedBear Blend" : {
-    builtin: ["BLE"]
-  },
-  "RedBear Blend Micro"  : { inherit: "RedBear Blend" },
-  /***********************************************/
-  "--- Other" : {},
-  /***********************************************/
-  "BBC micro:bit" : {
-    builtin: ["BLE"]
-  },
-  "RFDuino BLE" : {
-    builtin: ["BLE"]
-  },
-  "Simblee BLE" : {
-    builtin: ["BLE"]
-  }
-  /***********************************************/
-  //"TinyDuino"                : { inherit: "Arduino Uno", exclude: [/.*/] },
-  //"ATtiny85"                 : { exclude: [/.*/] },
-  /***********************************************/
 };
 
 Object.keys(boards).forEach((k) => {

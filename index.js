@@ -59,7 +59,7 @@ function generate(board, shield, example, auth_token, tmpl_id, dev_name) {
   
   var data = {
     auth:    auth_token || "YourAuthToken",
-    tmpl_id:    tmpl_id || "TMPLxxxxxx",
+    tmpl_id:    tmpl_id || "TMPxxxxxx",
     dev_name:    dev_name || "Device",
     defines: "\b",
     board : {

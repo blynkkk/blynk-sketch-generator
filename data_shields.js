@@ -6,6 +6,17 @@ const shields = {
   /***********************************************************/
   "Ethernet Shield W5100" : {
     name: "Arduino Ethernet Shield",
+    comment: `
+  This example shows how to use Arduino Ethernet shield (W5100)
+  to connect your project to Blynk.
+
+  NOTE: Pins 10, 11, 12 and 13 are reserved for Ethernet module.
+        DON'T use them in your sketch directly!
+
+  WARNING: If you have an SD card, you may need to disable it
+        by setting pin 4 to HIGH. Read more here:
+        https://www.arduino.cc/en/Main/ArduinoEthernetShield
+    `,
     inc: `
 #include <SPI.h>
 #include <Ethernet.h>
@@ -19,46 +30,10 @@ const shields = {
   pinMode(SDCARD_CS, OUTPUT);
   digitalWrite(SDCARD_CS, HIGH); // Deselect the SD card
 
-  Blynk.begin(auth);
+  Blynk.begin(BLYNK_AUTH_TOKEN);
   // You can also specify server:
-  //Blynk.begin(auth, "blynk.cloud", 80);
-  //Blynk.begin(auth, IPAddress(192,168,1,100), 8080);
-    `
-  },
-  /***********************************************/
-  "Ethernet Shield W5200" : {
-    name: "Seeed Ethernet Shield V2.0",
-    inc: `
-#include <SPI.h>
-#include <EthernetV2_0.h>
-#include <BlynkSimpleEthernetV2_0.h>
-    `,
-    glob : `
-#define W5200_CS  10
-#define SDCARD_CS 4
-    `,
-    init: `
-  pinMode(SDCARD_CS, OUTPUT);
-  digitalWrite(SDCARD_CS, HIGH); // Deselect the SD card
-
-  Blynk.begin(auth);
-  // You can also specify server:
-  //Blynk.begin(auth, "blynk.cloud", 80);
-  //Blynk.begin(auth, IPAddress(192,168,1,100), 8080);
-    `
-  },
-  /***********************************************/
-  "Ethernet Shield W5500" : {
-    inc: `
-#include <SPI.h>
-#include <Ethernet2.h>
-#include <BlynkSimpleEthernet2.h>
-    `,
-    init: `
-  Blynk.begin(auth);
-  // You can also specify server:
-  //Blynk.begin(auth, "blynk.cloud", 80);
-  //Blynk.begin(auth, IPAddress(192,168,1,100), 8080);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, "blynk.cloud", 80);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -82,10 +57,10 @@ const shields = {
 #include <BlynkSimpleUIPEthernet.h>
     `,
     init: `
-  Blynk.begin(auth);
+  Blynk.begin(BLYNK_AUTH_TOKEN);
   // You can also specify server:
-  //Blynk.begin(auth, "blynk.cloud", 80);
-  //Blynk.begin(auth, IPAddress(192,168,1,100), 8080);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, "blynk.cloud", 80);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, IPAddress(192,168,1,100), 8080);
     `
   },
 
@@ -114,10 +89,10 @@ char ssid[] = "YourNetworkName";
 char pass[] = "YourPassword";
     `,
     init: `
-  Blynk.begin(auth, ssid, pass);
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
-  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8080);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, "blynk.cloud", 80);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -154,39 +129,10 @@ ESP8266 wifi(&EspSerial);
   EspSerial.begin(ESP8266_BAUD);
   delay(10);
 
-  Blynk.begin(auth, wifi, ssid, pass);
+  Blynk.begin(BLYNK_AUTH_TOKEN, wifi, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, wifi, ssid, pass, "blynk.cloud", 80);
-  //Blynk.begin(auth, wifi, ssid, pass, IPAddress(192,168,1,100), 8080);
-    `
-  },
-  /***********************************************/
-  "CC3000" : {
-    comment: `
-  For this example you need Adafruit_CC3000_Library library:
-    https://github.com/adafruit/Adafruit_CC3000_Library
-
-  Note: Firmware version 1.14 or later is preferred.
-    `,
-    inc: `
-// These are the interrupt and control pins for СС3000
-#define ADAFRUIT_CC3000_IRQ   3
-#define ADAFRUIT_CC3000_VBAT  5
-#define ADAFRUIT_CC3000_CS    10
-
-#include <SPI.h>
-#include <Adafruit_CC3000.h>
-#include <BlynkSimpleCC3000.h>
-    `,
-    glob : `
-// Your WiFi credentials.
-// Choose wifi_sec from WLAN_SEC_UNSEC, WLAN_SEC_WEP, WLAN_SEC_WPA or WLAN_SEC_WPA2
-char ssid[] = "YourNetworkName";
-char pass[] = "YourPassword";
-int wifi_sec = WLAN_SEC_WPA2;
-    `,
-    init: `
-  Blynk.begin(auth, ssid, pass, wifi_sec);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, wifi, ssid, pass, "blynk.cloud", 80);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, wifi, ssid, pass, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -229,88 +175,19 @@ WiFly wifly;
   //wifly.setBaud(115200);
   //WiFlySerial.begin(115200);
 
-  Blynk.begin(auth, wifly, ssid, pass);
+  Blynk.begin(BLYNK_AUTH_TOKEN, wifly, ssid, pass);
     `
   },
-
-  /***********************************************************/
-  "--- Bluetooth" : {},
-  /***********************************************************/
-  "nRF8001"   : {
-    comment: `
-  For this example you need BLEPeripheral library
-    from http://librarymanager/all#BLEPeripheral
-    or https://github.com/sandeepmistry/arduino-BLEPeripheral
-
-  Warning: Bluetooth support is in beta!
-    `,
-    inc: `
-#include <BlynkSimpleSerialBLE.h>
-#include <BLEPeripheral.h>
-#include "BLESerial.h"
-#include <SPI.h>
-    `,
-    glob : `
-// define pins (varies per shield/board)
-#define BLE_REQ   10
-#define BLE_RDY   2
-#define BLE_RST   9
-
-// create ble serial instance, see pinouts above
-BLESerial SerialBLE(BLE_REQ, BLE_RDY, BLE_RST);
-    `,
-    init: `
-  SerialBLE.setLocalName("Blynk");
-  SerialBLE.setDeviceName("Blynk");
-  SerialBLE.setAppearance(0x0080);
-  SerialBLE.begin();
-
-  Blynk.begin(SerialBLE, auth);
-
-  Serial.println("Waiting for connections...");
-    `,
-    loop: `
-  SerialBLE.poll();
-    `
-  },
-  /***********************************************/
-  "HM10 or HC08" : {
-    need_serial: true,
-    comment: `
-  Warning: Bluetooth support is in beta!
-    `,
-    inc: `
-#include <BlynkSimpleSerialBLE.h>
-    `,
-    init: `
-  SerialBLE.begin(9600);
-  Blynk.begin(SerialBLE, auth);
-
-  Serial.println("Waiting for connections...");
-    `
-  },
-  /***********************************************/
-  "HC05 or HC06" : {
-    comment: `
-  Note: This only works on Android!
-        iOS does not support Bluetooth 2.0 Serial Port Profile
-        You may need to pair the module with your smartphone
-        via Bluetooth settings. Default pairing password is 1234
-
-  Feel free to apply it to any other example. It's simple!
-
-  NOTE: Bluetooth support is in beta!
-    `,
-    inherit: "HM10 or HC08"
-  },
-  "Adafruit Bluefruit LE" : { inherit: "nRF8001" },
 
   /***********************************************************/
   "--- Cellular" : {},
   /***********************************************************/
   "SimCOM SIM800" : {
     comment: `
-  WARNING: GSM modem support is for BETA testing.
+  Attention! Please check out TinyGSM guide:
+    https://tiny.cc/tinygsm-readme
+
+  Change GPRS apm, user, pass, and Blynk auth token to run :)
     `,
     defs: `
 #define TINY_GSM_MODEM_SIM800
@@ -321,7 +198,7 @@ BLESerial SerialBLE(BLE_REQ, BLE_RDY, BLE_RST);
 //#define BLYNK_HEARTBEAT 30
 
 #include <TinyGsmClient.h>
-#include <BlynkSimpleSIM800.h>
+#include <BlynkSimpleTinyGSM.h>
     `,
     glob : `
 // Your GPRS credentials
@@ -354,7 +231,7 @@ TinyGsm modem(SerialAT);
   // Unlock your SIM card with a PIN
   //modem.simUnlock("1234");
 
-  Blynk.begin(auth, modem, apn, user, pass);
+  Blynk.begin(BLYNK_AUTH_TOKEN, modem, apn, user, pass);
     `
   },
   /***********************************************/
@@ -386,7 +263,7 @@ TinyGsm modem(SerialAT);
   // Blynk will work through <%= serial_dat %>
   // Do not read or write this serial manually in your sketch
   <%= serial_dat %>.begin(9600);
-  Blynk.begin(<%= serial_dat %>, auth);
+  Blynk.begin(<%= serial_dat %>, BLYNK_AUTH_TOKEN);
     `
   },
   /***********************************************/
@@ -400,7 +277,7 @@ TinyGsm modem(SerialAT);
   // Blynk will work through Serial1
   // Do not read or write this serial manually in your sketch
   Serial1.begin(9600);
-  Blynk.begin(Serial1, auth);
+  Blynk.begin(Serial1, BLYNK_AUTH_TOKEN);
     `
   },
   /***********************************************/
@@ -417,7 +294,7 @@ SoftwareSerial SwSerial(10, 11); // RX, TX
   // Blynk will work through SoftwareSerial
   // Do not read or write this serial manually in your sketch
   SwSerial.begin(9600);
-  Blynk.begin(SwSerial, auth);
+  Blynk.begin(SwSerial, BLYNK_AUTH_TOKEN);
     `
   },
 
@@ -433,7 +310,7 @@ SoftwareSerial SwSerial(10, 11); // RX, TX
 #include <BlynkSimpleEthernet.h>
     `,
     init: `
-  Blynk.begin(auth);
+  Blynk.begin(BLYNK_AUTH_TOKEN);
     `
   },
   /***********************************************/
@@ -454,10 +331,10 @@ char ssid[] = "YourNetworkName";
 char pass[] = "YourPassword";
     `,
     init: `
-  Blynk.begin(auth, ssid, pass);
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
-  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8080);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, "blynk.cloud", 80);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -474,10 +351,10 @@ char ssid[] = "YourNetworkName";
 char pass[] = "YourPassword";
     `,
     init: `
-  Blynk.begin(auth, ssid, pass);
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, ssid, pass, "blynk.cloud", 443);
-  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8443);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, "blynk.cloud", 443);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, IPAddress(192,168,1,100), 8443);
     `
   },
   /***********************************************/
@@ -495,10 +372,10 @@ char ssid[] = "YourNetworkName";
 char pass[] = "YourPassword";
     `,
     init: `
-  Blynk.begin(auth, ssid, pass);
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
-  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8080);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, "blynk.cloud", 80);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -516,10 +393,10 @@ char ssid[] = "YourNetworkName";
 char pass[] = "YourPassword";
     `,
     init: `
-  Blynk.begin(auth, ssid, pass);
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, ssid, pass, "blynk.cloud", 443);
-  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8443);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, "blynk.cloud", 443);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, IPAddress(192,168,1,100), 8443);
     `
   },
   /***********************************************/
@@ -530,10 +407,10 @@ char pass[] = "YourPassword";
 #include <BlynkSimpleYun.h>
     `,
     init: `
-  Blynk.begin(auth);
+  Blynk.begin(BLYNK_AUTH_TOKEN);
   // You can also specify server:
-  //Blynk.begin(auth, "blynk.cloud", 80);
-  //Blynk.begin(auth, IPAddress(192,168,1,100), 8080);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, "blynk.cloud", 80);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -551,10 +428,10 @@ char ssid[] = "YourNetworkName";
 char pass[] = "YourPassword";
     `,
     init: `
-  Blynk.begin(auth, ssid, pass);
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
-  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8080);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, "blynk.cloud", 80);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, IPAddress(192,168,1,100), 8080);
     `
   },
   /***********************************************/
@@ -572,10 +449,10 @@ char ssid[] = "YourNetworkName";
 char pass[] = "YourPassword";
     `,
     init: `
-  Blynk.begin(auth, ssid, pass);
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
   // You can also specify server:
-  //Blynk.begin(auth, ssid, pass, "blynk.cloud", 443);
-  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8443);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, "blynk.cloud", 443);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, IPAddress(192,168,1,100), 8443);
     `
   },
   /***********************************************/
@@ -586,7 +463,7 @@ char pass[] = "YourPassword";
     `,
     init: `
   delay(5000); // Allow board to settle
-  Blynk.begin(auth);
+  Blynk.begin(BLYNK_AUTH_TOKEN);
     `
   },
   /***********************************************/
@@ -614,7 +491,7 @@ char pass[] = "YourPassword";
   delay(2000);
 
   Particle.keepAlive(PARTICLE_KEEPALIVE);
-  Blynk.begin(auth, BLYNK_IP);
+  Blynk.begin(BLYNK_AUTH_TOKEN, BLYNK_IP);
     `
   },
   /***********************************************/
@@ -640,7 +517,7 @@ BLEPeripheral  blePeripheral;
   blePeripheral.setDeviceName("Blynk");
   blePeripheral.setAppearance(384);
 
-  Blynk.begin(blePeripheral, auth);
+  Blynk.begin(blePeripheral, BLYNK_AUTH_TOKEN);
 
   blePeripheral.begin();
 
